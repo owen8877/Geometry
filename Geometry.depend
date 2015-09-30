@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1443489799 source:/home/xdroid/cpp/Geometry/Geometry/main.cpp
+	<GL/glut.h>
+	<math.h>
+
+1443504382 source:/home/xdroid/cpp/Geometry/Geometry/draw.cpp
+	<GL/glut.h>
+	<math.h>
+	"element.h"
+
+1443504405 /home/xdroid/cpp/Geometry/Geometry/element.h
+
