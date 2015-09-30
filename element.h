@@ -1,5 +1,8 @@
 #ifndef _ELEMENT_H_
 #define _ELEMENT_H_
+
+const double PAI = 3.1415926;
+
 class complex{
 protected:
     double x, y;

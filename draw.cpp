@@ -4,7 +4,6 @@
 
 const int MAX = 100;
 const double TINY = 0.02;
-const double PAI = 3.1415926;
 
 void drawCircle(point center, double radius){
     glBegin(GL_LINE_LOOP);

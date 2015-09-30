@@ -17,8 +17,8 @@ complex.o : complex.cpp
 point.o : point.cpp
 	$(CC) $(CFLAGS) -c point.cpp -o point.o
 
-line.o : line.cpp
-	$(CC) $(CFLAGS) -c line.cpp -o line.o
+complex.o : complex.cpp
+	$(CC) $(CFLAGS) -c complex.cpp -o complex.o
 
 clean :
 	rm -rf *.o Geometry
