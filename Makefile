@@ -1,24 +1,39 @@
-OBJS = main.o draw.o complex.o point.o line.o
-CC = g++
-CFLAGS = -Wall -O -g -lGL -lglut
+#Project Geometry test
 
-Geometry : $(OBJS)
-	$(CC) $(OBJS) -o Geometry -lGL -lglut -Wl,-rpath,/usr/local/lib/x86_64-linux-gnu
+BIN = bin/Geometry
+OBJ = bin/main.o bin/draw.o bin/complex.o bin/point.o bin/line.o
+LIB = -lGL -lglut -g3 -Wl,-rpath,/usr/local/lib/x86_64-linux-gnu
+CXX = g++
+CXXFLAGS = -Wall -O -g3
 
-main.o : main.cpp element.h draw.h
-	$(CC) $(CFLAGS) -c main.cpp -o main.o
+.PHONY: all all-before clean cleanbackup
+all: all-before $(BIN)
 
-draw.o : draw.cpp element.h
-	$(CC) $(CFLAGS) -c draw.cpp -o draw.o
+all-before: bin
 
-complex.o : complex.cpp
-	$(CC) $(CFLAGS) -c complex.cpp -o complex.o
+bin:
+	mkdir bin
 
-point.o : point.cpp
-	$(CC) $(CFLAGS) -c point.cpp -o point.o
+$(BIN): $(OBJ)
+	$(CXX) $(OBJ) -o $(BIN) $(LIB)
 
-line.o : line.cpp
-	$(CC) $(CFLAGS) -c line.cpp -o line.o
+bin/main.o : main.cpp element.h draw.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+bin/draw.o : draw.cpp element.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+bin/complex.o : complex.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+bin/point.o : point.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+bin/line.o : line.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+cleanbackup :
+	rm -f *~
 
 clean :
-	rm -rf *.o Geometry
+	rm -f $(BIN) $(OBJ)
