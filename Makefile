@@ -3,7 +3,7 @@ CC = g++
 CFLAGS = -Wall -O -g -lGL -lglut
 
 Geometry : $(OBJS)
-	$(CC) $(OBJS) -o Geometry -lGL -lglut
+	$(CC) $(OBJS) -o Geometry -lGL -lglut -Wl,-rpath,/usr/local/lib/x86_64-linux-gnu
 
 main.o : main.cpp element.h draw.h
 	$(CC) $(CFLAGS) -c main.cpp -o main.o
@@ -17,8 +17,8 @@ complex.o : complex.cpp
 point.o : point.cpp
 	$(CC) $(CFLAGS) -c point.cpp -o point.o
 
-complex.o : complex.cpp
-	$(CC) $(CFLAGS) -c complex.cpp -o complex.o
+line.o : line.cpp
+	$(CC) $(CFLAGS) -c line.cpp -o line.o
 
 clean :
 	rm -rf *.o Geometry

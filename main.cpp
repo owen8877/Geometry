@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include <math.h>
 #include <stdio.h>
 #include "element.h"
@@ -9,8 +9,9 @@ using namespace std;
 
 const double MAX_LONG = 1073741824.0;
 bool flag = false;
-complex x(0.02, 0);
-complex y(0, 0.02);
+complex x(0.01, 0);
+complex y(0, 0.01);
+complex rr = unit(0.01);
 line l(1.0, 2.0);
 
 vector<point> v;
@@ -18,11 +19,8 @@ vector<int> r;
 vector<int> g;
 vector<int> b;
 
-void myinit(){
-    //if (flag) return;
-    //flag = true;
-    glClear(GL_COLOR_BUFFER_BIT);
-    drawCircle(point(0.0, 0.0), 1.0);
+void init(){
+    glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
     for (int i = 0;i < 10;i++){
         double ran = rand()/MAX_LONG - 1;
         r.push_back(rand());
@@ -30,20 +28,36 @@ void myinit(){
         b.push_back(rand());
         v.push_back(point(ran, (rand()/MAX_LONG-1)*sqrt(1-ran*ran)));
         printf("%f %f %d\n", v[i].getX(), v[i].getY(), i);
-        drawPoint(v[i], r[i], g[i], b[i]);
     }
 }
 
-void mobius(complex c){
+void display(){
     glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(1.0f, 1.0f, 1.0f);
     drawCircle(point(0.0, 0.0), 1.0);
+    for (int i = 0; i < 10; ++i){
+        drawPoint(v[i], r[i], g[i], b[i]);}
+    glColor3f(1.0f, 1.0f, 0.0f);
+    drawLine(l);
+    
+    glFlush();
+}
+
+void mobius(complex c){
     for (int i = 0;i < 10;i++){
         v[i] = v[i].mobius(c);
         v[i].print();
-        drawPoint(v[i], r[i], g[i], b[i]);
     }
     l = l.mobius(c);
-    drawLine(l);
+    return;
+}
+
+void rotate(complex c){
+    for (int i = 0;i < 10;i++){
+        v[i] = v[i]*c;
+        v[i].print();
+    }
+    l = l*c;
     return;
 }
 
@@ -53,18 +67,28 @@ void keyboardCallback(unsigned char key, int _x, int _y){
         case 's' : mobius(y); break;
         case 'a' : mobius(x); break;
         case 'd' : mobius(x.negative()); break;
+        case 'q' : rotate(rr); break;
+        case 'e' : rotate(rr.conj()); break;
+        case '\x1B' : glutLeaveMainLoop(); break;
         default : printf("Hey!\n");
     }
+    glutPostRedisplay();
 }
 
 int main(int argc, char *argv[]){
+    //Window Initialization
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(400, 400);
     glutCreateWindow("Geometry");
+    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
     glutKeyboardFunc(&keyboardCallback);
-    glutDisplayFunc(&myinit);
+    glutDisplayFunc(&display);
+    
+    init();
+
     glutMainLoop();
+    
     return 0;
 }
