@@ -2,8 +2,7 @@
 #define _ELEMENT_H_
 #include <math.h>
 
-const double PAI = 3.1415926;
-
+// The class of complex numbers, use as intended.
 class complex{
 protected:
     double x, y;
@@ -12,10 +11,11 @@ public:
     complex(double _x, double _y);
     complex(double _x);
     complex(int _x);
+    void set(double _x, double _y);
     void setX(double _x);
     void setY(double _y);
-    const double getX() const;
-    const double getY() const;
+    double getX() const;
+    double getY() const;
 
     complex addtion(complex c);
     complex substraction(complex c);
@@ -44,6 +44,7 @@ public:
     //friend complex operator /(complex const &a, double b);
 };
 
+// The class of points on the Poincare disk
 class point : public complex{
 public:
     point();
@@ -53,6 +54,7 @@ public:
     virtual void print();
 };
 
+// The class of straignt lines on the Poincare disk
 class line : public complex{
 public:
     line(double _x, double _y);
@@ -65,6 +67,7 @@ public:
     virtual void print();
 };
 
+// returns a complex with radius 1 and argument theta
 inline complex unit(double theta){ return complex(cos(theta), sin(theta)); }
 
 point getPointByDistance(point p, line l, bool flag, double d);

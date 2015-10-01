@@ -1,14 +1,12 @@
 #include <GL/freeglut.h>
 #include <math.h>
 #include <stdio.h>
+#include <vector>
 #include "element.h"
 #include "draw.h"
-#include <vector>
 
 using namespace std;
 
-const double MAX_LONG = 1073741824.0;
-bool flag = false;
 complex x(0.01, 0);
 complex y(0, 0.01);
 complex rr = unit(0.01);
@@ -107,10 +105,15 @@ int main(int argc, char *argv[]){
     glutInitWindowSize(400, 400);
     glutCreateWindow("Geometry");
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
+
+    //Callback function registry
     glutKeyboardFunc(&keyboardCallback);
     glutDisplayFunc(&display);
-
+    
+    //Initialization
     init();
+
+    //Main loop
     glutMainLoop();
 
     return 0;

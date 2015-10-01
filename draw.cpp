@@ -10,7 +10,7 @@ void drawCircle(point center, double radius){
     glBegin(GL_LINE_LOOP);
     double theta;
     for (int i = 0;i < MAX;i++){
-        theta = 2 * PAI * i / MAX;
+        theta = 2 * M_PI * i / MAX;
         glVertex2d(radius*cos(theta)+center.getX(), radius*sin(theta)+center.getY());
     }
     glEnd();

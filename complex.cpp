@@ -7,10 +7,11 @@ complex::complex(double _x, double _y):x(_x), y(_y){}
 complex::complex(double _x):x(_x), y(0.0){}
 complex::complex(int _x):x(_x), y(0.0){}
 
+void complex::set(double _x, double _y){ x = _x; y = _y; }
 void complex::setX(double _x){ x = _x; }
 void complex::setY(double _y){ y = _y; }
-const double complex::getX()const{ return x; }
-const double complex::getY()const{ return y; }
+double complex::getX()const{ return x; }
+double complex::getY()const{ return y; }
 
 complex complex::addtion(complex c){ return complex(x + c.x, y + c.y); }
 complex complex::substraction(complex c){ return complex(x - c.x, y - c.y); }
