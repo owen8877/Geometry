@@ -1,1 +1,5 @@
 bin
+makefile~
+Geometry.cbp
+Geometry.depend
+Geometry.layout

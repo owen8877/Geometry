@@ -20,8 +20,8 @@ const double complex::getY()const{ return y; }
 complex complex::addtion(complex _c){ return complex(x + _c.x, y + _c.y); }
 complex complex::substraction(complex _c){ return complex(x - _c.x, y - _c.y); }
 complex complex::production(complex _c){ return complex((x*_c.x - y*_c.y), (x*_c.y + y*_c.x)); }
-complex complex::division(complex _c){ double sqr = _c.abs2(); return complex(((x*_c.x + y*_c.y)/sqr), ((y*_c.x - x*_c.y)/sqr)); }
-complex complex::reversion(){ double sqr = x*x + y*y; return complex(x/sqr, -y/sqr); }
+complex complex::division(complex _c){ return complex(((x*_c.x + y*_c.y)/abs2()), ((y*_c.x - x*_c.y)/abs2())); }
+complex complex::reversion(){ return complex(x/abs2(), -y/abs2()); }
 complex complex::negative(){ return complex(-x, -y); }
 double complex::abs()const{ return sqrt(x*x + y*y); }
 double complex::abs2()const{ return x*x + y*y; }

@@ -61,4 +61,6 @@ public:
 };
 
 inline complex unit(double theta){return complex(cos(theta), sin(theta));}
+
+point getPointByDistance(point p, line l, bool flag, double d);
 #endif

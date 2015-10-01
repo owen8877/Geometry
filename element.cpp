@@ -11,11 +11,13 @@
 
 point getPointByDistance(point p, line l, bool flag, double d){
     d = (flag ? d : (-d));
-    double A = (1.0-p.sqr()) * exp(d);
-    double B = 1.0 + p.sqr();
+    double A = (1.0-p.abs2()) * exp(d);
+    double B = 1.0 + p.abs2();
+    //complex mystery = complex(1.0, sqrt(l.getCenter().abs2()-1.0)) / l.getCenter().conj();
+    complex mystery = l.getCenter() + l.getRadius() * unit(l.getStartArc());
     return point(
-               ((A-B)*unit(l.getStartArc()) + 2.0*p)
+               ((A-B)*mystery + 2.0*p)
                /
-               ((A+B) - 2.0*p.conj()*unit(l.getStartArc()))
+               ((A+B) - 2.0*p.conj()*mystery)
            );
 }
