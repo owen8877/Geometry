@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include <math.h>
 #include "element.h"
 
@@ -13,17 +13,16 @@ void drawCircle(point center, double radius){
         glVertex2d(radius*cos(theta)+center.getX(), radius*sin(theta)+center.getY());
     }
     glEnd();
-    glFlush();
 }
 
 void drawArc(point center, double radius, double startarc, double endarc){
     glBegin(GL_LINE_STRIP);
-    double step = (endarc-startarc) / MAX;
-    for (double theta = startarc;theta < endarc;theta+=step){
-        glVertex2d(radius*cos(theta)+center.getX(), radius*sin(theta)+center.getY());
+    double step = (endarc-startarc) / MAX, theta = startarc;
+    for (int i = 0; i <= MAX; ++i){
+        glVertex2d(radius*cos(theta) + center.getX(), radius*sin(theta) + center.getY());
+	theta += step;
     }
     glEnd();
-    glFlush();
 }
 
 void drawLine(line l){
@@ -37,7 +36,6 @@ void drawPoint(point p){
     glVertex2d(p.getX()+TINY, p.getY()+TINY);
     glVertex2d(p.getX()+TINY, p.getY()-TINY);
     glEnd();
-    glFlush();
 }
 
 void drawPoint(point p, int r, int g, int b){
@@ -48,5 +46,4 @@ void drawPoint(point p, int r, int g, int b){
     glVertex2d(p.getX()+TINY, p.getY()+TINY);
     glVertex2d(p.getX()+TINY, p.getY()-TINY);
     glEnd();
-    glFlush();
 }
