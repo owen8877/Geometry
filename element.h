@@ -10,6 +10,7 @@ protected:
 public:
     complex();
     complex(double _x, double _y);
+    //complex(double theta);
     void setX(double _x);
     void setY(double _y);
     const double getX() const;
@@ -22,7 +23,7 @@ public:
     complex reversion();
     complex negative();
     double abs() const;
-    double sqr() const;
+    double abs2() const;
     complex conj();
     void print();
 
@@ -59,6 +60,5 @@ public:
     line mobius(complex c);
 };
 
-inline complex unit(double theta){ return complex(cos(theta), sin(theta)); }
-point getPointByDistance(point p, line l, bool flag, double d);
+inline complex unit(double theta){return complex(cos(theta), sin(theta));}
 #endif
