@@ -8,9 +8,9 @@
 
 using namespace std;
 
-complex x(0.01, 0);
-complex y(0, 0.01);
-complex rr = unit(0.01);
+complex x(0.03, 0);
+complex y(0, 0.03);
+complex rr = unit(0.05);
 line l(0.7, 0.8);
 point p(0.1, 0.3);
 
@@ -20,11 +20,11 @@ vector<int> g;
 vector<int> b;
 
 void new_point_in_v(){
-    double ran = rand()/MAX_LONG - 1;
+    double ran = (double) rand()/RAND_MAX*2 - 1;
     r.push_back(rand());
     g.push_back(rand());
     b.push_back(rand());
-    v.push_back(point(ran, (rand()/MAX_LONG-1)*sqrt(1-ran*ran)));
+    v.push_back(point(ran, ((double)rand()/RAND_MAX*2-1)*sqrt(1-ran*ran)));
 }
 
 void new_point_in_v(point _p){

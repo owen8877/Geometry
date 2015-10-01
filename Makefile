@@ -36,7 +36,7 @@ bin/element.o : element.cpp element.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 cleanbackup :
-	rm -f *~
+	rm -f *~ *.orig
 
 cb : cleanbackup
 
