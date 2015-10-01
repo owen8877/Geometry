@@ -1,5 +1,6 @@
 #ifndef _ELEMENT_H_
 #define _ELEMENT_H_
+#include <math.h>
 
 const double PAI = 3.1415926;
 
@@ -11,8 +12,8 @@ public:
     complex(double _x, double _y);
     void setX(double _x);
     void setY(double _y);
-    double getX();
-    double getY();
+    const double getX() const;
+    const double getY() const;
 
     complex addtion(complex _c);
     complex substraction(complex _c);
@@ -20,9 +21,23 @@ public:
     complex division(complex _c);
     complex reversion();
     complex negative();
-    double abs();
+    double abs() const;
+    double sqr() const;
     complex conj();
     void print();
+
+    complex operator +(complex const &c);
+    complex operator -(complex const &c);
+    complex operator *(complex const &c);
+    complex operator /(complex const &c);
+    friend complex operator +(double a, complex const &b);
+    friend complex operator -(double a, complex const &b);
+    friend complex operator *(double a, complex const &b);
+    friend complex operator /(double a, complex const &b);
+    friend complex operator +(complex const &a, double b);
+    friend complex operator -(complex const &a, double b);
+    friend complex operator *(complex const &a, double b);
+    friend complex operator /(complex const &a, double b);
 };
 
 class point : public complex{
@@ -43,4 +58,7 @@ public:
     double getEndArc();
     line mobius(complex c);
 };
+
+inline complex unit(double theta){ return complex(cos(theta), sin(theta)); }
+point getPointByDistance(point p, line l, bool flag, double d);
 #endif

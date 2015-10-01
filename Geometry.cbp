@@ -34,9 +34,12 @@
 		<Linker>
 			<Add option="-lGL -lglut" />
 		</Linker>
+		<Unit filename="complex.cpp" />
 		<Unit filename="draw.cpp" />
 		<Unit filename="element.cpp" />
+		<Unit filename="line.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="point.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

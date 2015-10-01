@@ -13,8 +13,8 @@ line::line(complex c){
 }
 
 point line::getCenter(){ return point(x, y); }
-
 double line::getRadius(){ return sqrt(x*x+y*y-1); }
+
 double line::getStartArc(){
     double middle = atan(y/x);
     double deflection = asin(1/sqrt(x*x+y*y));
@@ -29,43 +29,9 @@ double line::getEndArc(){
 }
 
 line line::mobius(complex c){
-    return line
-            (
-                substraction
-                (
-                    c.production
-                    (
-                        complex(2,0)
-                    )
-                )
-                .addtion
-                (
-                    conj()
-                    .production(c)
-                    .production(c)
-                )
-                .division
-                (
-                    complex(1,0)
-                    .addtion
-                    (
-                        complex(c.abs()*c.abs(),0)
-                        .substraction
-                        (
-                            production
-                            (
-                                c.conj()
-                            )
-                        )
-                        .substraction
-                        (
-                            c.production
-                            (
-                                conj()
-                            )
-                        )
-
-                    )
-                )
-        );
+    return line(
+                ((*this) - c*2.0 + conj()*c*c )
+                /
+                ( 1 + c*c.conj() - (*this)*c.conj() - c*conj() )
+               );
 }

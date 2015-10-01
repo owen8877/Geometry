@@ -1,4 +1,4 @@
-OBJS = main.o draw.o complex.o point.o line.o
+OBJS = main.o draw.o complex.o point.o line.o element.o
 CC = g++
 CFLAGS = -Wall -O -g -lGL -lglut
 
@@ -10,6 +10,9 @@ main.o : main.cpp element.h draw.h
 
 draw.o : draw.cpp element.h
 	$(CC) $(CFLAGS) -c draw.cpp -o draw.o
+
+element.o : element.cpp element.h
+	$(CC) $(CFLAGS) -c element.cpp -o element.o
 
 complex.o : complex.cpp
 	$(CC) $(CFLAGS) -c complex.cpp -o complex.o

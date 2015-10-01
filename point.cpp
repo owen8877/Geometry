@@ -18,5 +18,6 @@ point::point(complex c){
 }
 
 point point::mobius(complex c){
-    return point(substraction(c).division(complex(1,0).substraction(production(c.conj()))));
+    //return point(substraction(c).division(complex(1,0).substraction(production(c.conj()))));
+    return point(((*this) - c)/(1.0 - (*this)*c.conj()));
 }
