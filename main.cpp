@@ -12,8 +12,8 @@ bool flag = false;
 complex x(0.01, 0);
 complex y(0, 0.01);
 complex rr = unit(0.01);
-line l(1.25, 0.0);
-point p(0.5, 0.0);
+line l(0.7, 0.8);
+point p(0.1, 0.3);
 
 vector<point> v;
 vector<int> r;
@@ -61,7 +61,7 @@ void display(){
 void mobius(complex c){
     for (unsigned int i = 0;i < v.size();i++){
         v[i] = v[i].mobius(c);
-        v[i].print();
+        //v[i].print();
     }
     l = l.mobius(c);
     p = p.mobius(c);
@@ -71,7 +71,7 @@ void mobius(complex c){
 void rotate(complex c){
     for (unsigned int i = 0;i < v.size();i++){
         v[i] = v[i]*c;
-        v[i].print();
+        //v[i].print();
     }
     l = l*c;
     p = p*c;
@@ -91,8 +91,10 @@ void keyboardCallback(unsigned char key, int _x, int _y){
                 scanf("%lf %lf", &temp_1, &temp_2);
                 mobius(complex(temp_1, temp_2));
                 break;
-        case '\x1B' : glutLeaveMainLoop(); break;
-        default : printf("Hey!\n");
+	case '\x0D' :
+        case '\x1B' :
+		glutLeaveMainLoop(); break;
+	default : printf("Key Pressed: %d\n", key);
     }
     glutPostRedisplay();
 }

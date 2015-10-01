@@ -1,4 +1,5 @@
 #include <GL/freeglut.h>
+#include <stdio.h>
 #include <math.h>
 #include "element.h"
 

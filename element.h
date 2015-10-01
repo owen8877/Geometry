@@ -10,35 +10,38 @@ protected:
 public:
     complex();
     complex(double _x, double _y);
-    //complex(double theta);
+    complex(double _x);
+    complex(int _x);
     void setX(double _x);
     void setY(double _y);
     const double getX() const;
     const double getY() const;
 
-    complex addtion(complex _c);
-    complex substraction(complex _c);
-    complex production(complex _c);
-    complex division(complex _c);
+    complex addtion(complex c);
+    complex substraction(complex c);
+    complex production(complex c);
+    complex division(complex c);
     complex reversion();
     complex negative();
     double abs() const;
     double abs2() const;
     complex conj();
-    void print();
+    virtual void print();
 
-    complex operator +(complex const &c);
-    complex operator -(complex const &c);
-    complex operator *(complex const &c);
-    complex operator /(complex const &c);
-    friend complex operator +(double a, complex const &b);
-    friend complex operator -(double a, complex const &b);
-    friend complex operator *(double a, complex const &b);
-    friend complex operator /(double a, complex const &b);
-    friend complex operator +(complex const &a, double b);
-    friend complex operator -(complex const &a, double b);
-    friend complex operator *(complex const &a, double b);
-    friend complex operator /(complex const &a, double b);
+    complex operator -();
+
+    complex operator +(const complex &c);
+    complex operator -(const complex &c);
+    complex operator *(const complex &c);
+    complex operator /(const complex &c);
+    friend complex operator +(double a, const complex &b);
+    friend complex operator -(double a, const complex &b);
+    friend complex operator *(double a, const complex &b);
+    friend complex operator /(double a, const complex &b);
+    //friend complex operator +(complex const &a, double b);
+    //friend complex operator -(complex const &a, double b);
+    //friend complex operator *(complex const &a, double b);
+    //friend complex operator /(complex const &a, double b);
 };
 
 class point : public complex{
@@ -47,6 +50,7 @@ public:
     point(double _x, double _y);
     point(complex c);
     point mobius(complex c);
+    virtual void print();
 };
 
 class line : public complex{
@@ -58,9 +62,10 @@ public:
     double getStartArc();
     double getEndArc();
     line mobius(complex c);
+    virtual void print();
 };
 
-inline complex unit(double theta){return complex(cos(theta), sin(theta));}
+inline complex unit(double theta){ return complex(cos(theta), sin(theta)); }
 
 point getPointByDistance(point p, line l, bool flag, double d);
 #endif
