@@ -37,7 +37,7 @@ void new_point_in_v(point _p){
 
 void init(){
     glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
-    for (int i = 0;i < 0;i++){
+    for (int i = 0;i < 10;i++){
         new_point_in_v();
         printf("%f %f %d\n", v[i].getX(), v[i].getY(), i);
     }

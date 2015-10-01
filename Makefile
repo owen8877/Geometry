@@ -1,7 +1,7 @@
 #Project Geometry test
 
 BIN = bin/Geometry
-OBJ = bin/main.o bin/draw.o bin/complex.o bin/point.o bin/line.o
+OBJ = bin/main.o bin/draw.o bin/complex.o bin/point.o bin/line.o bin/element.o
 LIB = -lGL -lglut -g3 -Wl,-rpath,/usr/local/lib/x86_64-linux-gnu
 CXX = g++
 CXXFLAGS = -Wall -O -g3
@@ -30,6 +30,9 @@ bin/point.o : point.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 bin/line.o : line.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+bin/element.o : element.cpp element.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 cleanbackup :
