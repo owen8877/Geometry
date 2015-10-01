@@ -4,7 +4,7 @@ BIN = bin/Geometry
 OBJ = bin/main.o bin/draw.o bin/complex.o bin/point.o bin/line.o bin/element.o
 LIB = -lGL -lglut -g3 -Wl,-rpath,/usr/local/lib/x86_64-linux-gnu
 CXX = g++
-CXXFLAGS = -Wall -O -g3
+CXXFLAGS = -Wall -g3
 
 .PHONY: test clean cleanbackup cb
 
@@ -15,7 +15,7 @@ bin:
 	mkdir bin
 
 test : $(BIN)
-	./Geometry
+	./$(BIN)
 
 bin/main.o : main.cpp element.h draw.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
