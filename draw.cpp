@@ -27,7 +27,18 @@ void drawArc(point center, double radius, double startarc, double endarc){
 }
 
 void drawLine(line l){
-    drawArc(l.getCenter(), l.getRadius(), l.getStartArc(), l.getEndArc());
+    if (l.isDiameter()){
+        glBegin(GL_LINE_STRIP);
+        glVertex2d(l.getLeft().getX(), l.getLeft().getY());
+        glVertex2d(l.getRight().getX(), l.getRight().getY());
+        glEnd();
+        return;
+    }
+    double middle = atan2(l.getCenter().getY(), l.getCenter().getX()) + M_PI;
+    double deflection = atan(1/l.getRadius());
+    double start = middle - deflection;
+    double end = middle + deflection;
+    drawArc(l.getCenter(), l.getRadius(), start, end);
 }
 
 void drawPoint(point p){

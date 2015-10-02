@@ -39,3 +39,5 @@ complex operator /(double a, const complex &b){ double sqr = b.abs2(); return co
 //complex operator -(complex const &a, double b){ return complex(a.x - b, a.y); }
 //complex operator *(complex const &a, double b){ return complex(a.x*b, a.y*b); }
 //complex operator /(complex const &a, double b){ return complex(a.x/b, a.y/b); }
+
+//bool complex::operator ==(const complex &c){ return (x == c.x) && (y == c.y); }

@@ -7,7 +7,7 @@ point transform::operator ()(point p){
 }
 
 line transform::operator ()(line l){
-    return line( unit(th) * (l + l.conj()*c*c - 2*c) / (1 + c.abs2() - l*c.conj() - l.conj()*c) );
+    return line( unit(th) * (l.getCenter() + l.getCenter().conj()*c*c - 2*c) / (1 + c.abs2() - l.getCenter()*c.conj() - l.getCenter().conj()*c) );
 }
 
 transform transform::operator ()(transform t){
