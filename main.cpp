@@ -11,8 +11,8 @@ using namespace std;
 complex x(0.03, 0);
 complex y(0, 0.03);
 complex rr = unit(0.05);
-line l(0.7, 0.8);
-point p(0.1, 0.3);
+line l(1.0, 1.0);
+point p(0.2928, 0.2928);
 
 vector<point> v;
 vector<int> r;

@@ -21,6 +21,7 @@ complex complex::reversion(){ double sqr = x*x + y*y; return complex(x/sqr, -y/s
 complex complex::negative(){ return complex(-x, -y); }
 double complex::abs()const{ return sqrt(x*x + y*y); }
 double complex::abs2()const{ return x*x + y*y; }
+double complex::arg()const{ return atan2(y,x); }
 complex complex::conj(){ return complex(x, -y); }
 void complex::print(){ printf("(%f, %f)\n", x, y); }
 
