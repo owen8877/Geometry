@@ -11,8 +11,9 @@ using namespace std;
 complex x(0.03, 0);
 complex y(0, 0.03);
 complex rr = unit(0.05);
-line l(0.7, 0.8);
-point p(0.1, 0.3);
+line l(1.25, 0.0);
+point p(0.5, 0.0);
+point pp(0.8, 0.6);
 
 vector<point> v;
 vector<int> r;
@@ -41,6 +42,7 @@ void mobius(complex c){
         v[i] = v[i].mobius(c);
     }
     l = l.mobius(c);
+    p = p.mobius(c);
     return;
 }
 
@@ -48,7 +50,8 @@ void rotate(complex c){
     for (unsigned int i = 0; i < v.size(); ++i){
         v[i] = v[i]*c;
     }
-    l = l*c;
+    l = l.rotate(c);
+    p = p*c;
     return;
 }
 
@@ -74,9 +77,12 @@ void init(){
         new_point_in_v();
         printf("%f %f %d\n", v[i].getX(), v[i].getY(), i);
     }
-    new_point_in_v(p);
-    new_point_in_v(unit(l.getStartArc()));
-    //getPointByDistance(p, l, true, 1.0).print();
+    //new_point_in_v(p);
+    new_point_in_v(pp);
+    //p.print();
+    //pp.print();
+    //l.print();
+    //getPointByDistance(p, l, 1.0).print();
 }
 
 void update(int kbstat[]){
@@ -98,7 +104,8 @@ void display(){
 
     glColor3f(0.0f, 1.0f, 1.0f);
     drawLine(l);
-    drawPoint(getPointByDistance(p, l, true, 1.0), r[0], g[0], b[0]);
+    drawPoint(p);
+    drawPoint(getPointByDistance(p, l, 1.0), r[0], g[0], b[0]);
 
     for (unsigned int i = 0; i < v.size(); ++i){
         drawPoint(v[i], r[i], g[i], b[i]);
@@ -132,6 +139,7 @@ void keyboardCallback(unsigned char key, int _x, int _y){
             scanf("%lf %lf", &temp_1, &temp_2);
             mobius(complex(temp_1, temp_2));
             break;
+        case 'l' : mobius(p); break;
         case '\x0D' :
         case '\x1B' :
             glutLeaveMainLoop();
@@ -158,7 +166,6 @@ int main(int argc, char *argv[]){
     glutKeyboardUpFunc(&keyboardUpCallback);
     glutDisplayFunc(&display);
     glutTimerFunc(0, &timerCallback, 0);
-
     //Initialization
     init();
 
