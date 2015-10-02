@@ -110,6 +110,22 @@ class transform{
         transform operator *(transform t);
 };
 
+// The class of isometries (transforms that preserves distance) on the Poincare disk
+// Transform point z to e^(i*th)*(z-c)/(1-z*c.conj())
+class transform{
+    private:
+        double th;
+        complex c;
+    public:
+        transform(double theta):th(theta), c(0.0){}
+        transform(complex center):th(0.0), c(center){}
+        transform(double theta, complex center):th(theta), c(center){}
+        point operator ()(point p);
+        line operator ()(line l);
+        transform operator ()(transform t);
+        transform operator *(transform t);
+};
+
 // returns a complex with radius 1 and argument theta
 inline complex unit(double theta){ return complex(cos(theta), sin(theta)); }
 
