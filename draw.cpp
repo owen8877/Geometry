@@ -1,4 +1,5 @@
 #include <GL/freeglut.h>
+#include <stdio.h>
 #include <math.h>
 #include "element.h"
 
@@ -9,7 +10,7 @@ void drawCircle(point center, double radius){
     glBegin(GL_LINE_LOOP);
     double theta;
     for (int i = 0;i < MAX;i++){
-        theta = 2 * PAI * i / MAX;
+        theta = 2 * M_PI * i / MAX;
         glVertex2d(radius*cos(theta)+center.getX(), radius*sin(theta)+center.getY());
     }
     glEnd();
@@ -20,7 +21,7 @@ void drawArc(point center, double radius, double startarc, double endarc){
     double step = (endarc-startarc) / MAX, theta = startarc;
     for (int i = 0; i <= MAX; ++i){
         glVertex2d(radius*cos(theta) + center.getX(), radius*sin(theta) + center.getY());
-	theta += step;
+        theta += step;
     }
     glEnd();
 }

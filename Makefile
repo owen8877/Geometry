@@ -4,18 +4,18 @@ BIN = bin/Geometry
 OBJ = bin/main.o bin/draw.o bin/complex.o bin/point.o bin/line.o bin/element.o
 LIB = -lGL -lglut -g3 -Wl,-rpath,/usr/local/lib/x86_64-linux-gnu
 CXX = g++
-CXXFLAGS = -Wall -O -g3
+CXXFLAGS = -Wall -g3
 
-.PHONY: all all-before clean cleanbackup
-all: all-before $(BIN)
+.PHONY: test clean cleanbackup cb
 
-all-before: bin
+$(BIN): bin $(OBJ)
+	$(CXX) $(OBJ) -o $(BIN) $(LIB)
 
 bin:
 	mkdir bin
 
-$(BIN): $(OBJ)
-	$(CXX) $(OBJ) -o $(BIN) $(LIB)
+test : $(BIN)
+	./$(BIN)
 
 bin/main.o : main.cpp element.h draw.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -23,20 +23,22 @@ bin/main.o : main.cpp element.h draw.h
 bin/draw.o : draw.cpp element.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-bin/complex.o : complex.cpp
+bin/complex.o : complex.cpp element.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-bin/point.o : point.cpp
+bin/point.o : point.cpp element.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-bin/line.o : line.cpp
+bin/line.o : line.cpp element.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 bin/element.o : element.cpp element.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 cleanbackup :
-	rm -f *~
+	rm -f *~ *.orig
+
+cb : cleanbackup
 
 clean :
 	rm -f $(BIN) $(OBJ)
