@@ -65,8 +65,6 @@ int getfps(){
 }
 
 void init(){
-    printf("--------Geometry test 0.0.0--------\n");
-    printf("OpenGL Version %s\n\n", glGetString(GL_VERSION));
 
     glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -75,7 +73,8 @@ void init(){
         printf("%f %f %d\n", v[i].getX(), v[i].getY(), i);
     }
     new_point_in_v(p);
-    new_point_in_v(unit(l.getStartArc()));
+    new_point_in_v(unit(l.getStartArc() - M_PI/2));
+    new_point_in_v(unit(l.getEndArc() + M_PI/2));
     //getPointByDistance(p, l, true, 1.0).print();
 }
 
@@ -108,7 +107,7 @@ void display(){
     char str[257];
     sprintf(str, "FPS: %d\n", getfps());
     glColor3f(1.0f, 1.0f, 0.5f);
-    glRasterPos2d(-1, 1-0.06);
+    glRasterPos2d(-1, 1-0.03);
     glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)str);
 
     //Flush the drawing process
@@ -149,7 +148,7 @@ int main(int argc, char *argv[]){
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
     glutInitWindowPosition(100, 100);
-    glutInitWindowSize(400, 400);
+    glutInitWindowSize(600, 600);
     glutCreateWindow("Geometry");
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
