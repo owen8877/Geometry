@@ -23,13 +23,13 @@ double line::getEndArc(){
 
 line line::mobius(complex c){
     return line(
-                ( (*this) - c*2 + conj()*c*c )
-                /
-                ( 1 + c.abs2() - (*this)*c.conj() - c*conj() )
-               );
+            ( (*this) - c*2 + conj()*c*c )
+            /
+            ( 1 + c.abs2() - (*this)*c.conj() - c*conj() )
+            );
 }
 
 void line::print(){
-	printf("Line: ");
-	complex::print();
+    printf("Line: ");
+    complex::print();
 }

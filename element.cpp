@@ -16,8 +16,8 @@ point getPointByDistance(point p, line l, bool flag, double d){
     //complex mystery = complex(1.0, sqrt(l.getCenter().abs2()-1.0)) / l.getCenter().conj();
     complex mystery = l.getCenter() + l.getRadius() * unit(l.getStartArc());
     return point(
-               ((A-B)*mystery + 2.0*p)
-               /
-               ((A+B) - 2.0*p.conj()*mystery)
-           );
+            ((A-B)*mystery + 2.0*p)
+            /
+            ((A+B) - 2.0*p.conj()*mystery)
+            );
 }

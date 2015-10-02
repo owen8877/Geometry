@@ -19,6 +19,8 @@ vector<int> r;
 vector<int> g;
 vector<int> b;
 
+int kbstat[256] = {0};
+
 void new_point_in_v(){
     double ran = (double) rand()/RAND_MAX*2 - 1;
     r.push_back(rand());
@@ -33,10 +35,9 @@ void new_point_in_v(point _p){
     b.push_back(rand());
     v.push_back(_p);
 }
-int kbstat[256] = {0};
 
 void mobius(complex c){
-    for (int i = 0;i < 10;i++){
+    for (unsigned int i = 0; i < v.size(); ++i){
         v[i] = v[i].mobius(c);
     }
     l = l.mobius(c);
@@ -44,7 +45,7 @@ void mobius(complex c){
 }
 
 void rotate(complex c){
-    for (int i = 0;i < 10;i++){
+    for (unsigned int i = 0; i < v.size(); ++i){
         v[i] = v[i]*c;
     }
     l = l*c;
@@ -56,9 +57,9 @@ int getfps(){
     static time_t t1 = time(NULL);
     time_t t = time(NULL);
     if (t > t1) {
-	fps = count/(t-t1);
+        fps = count/(t-t1);
         t1 = t;
-	count = 0;
+        count = 0;
     }else ++count;
     return fps;
 }
@@ -78,7 +79,7 @@ void init(){
     //getPointByDistance(p, l, true, 1.0).print();
 }
 
-void update(){
+void update(int kbstat[]){
     if (kbstat['w']) mobius(y.negative());
     if (kbstat['s']) mobius(y);
     if (kbstat['a']) mobius(x);
@@ -116,25 +117,25 @@ void display(){
 
 void timerCallback(int index){
     switch (index) {
-    case 0:
-	update();
-        glutPostRedisplay();
-        glutTimerFunc(32, &timerCallback, 0);
-	break;
+        case 0:
+            glutTimerFunc(32, &timerCallback, 0);
+            update(kbstat);
+            glutPostRedisplay();
+            break;
     }
 }
 
 void keyboardCallback(unsigned char key, int _x, int _y){
     switch (key) {
         case 'm' :
-                double temp_1, temp_2;
-                scanf("%lf %lf", &temp_1, &temp_2);
-                mobius(complex(temp_1, temp_2));
-                break;
-	case '\x0D' :
+            double temp_1, temp_2;
+            scanf("%lf %lf", &temp_1, &temp_2);
+            mobius(complex(temp_1, temp_2));
+            break;
+        case '\x0D' :
         case '\x1B' :
-	    glutLeaveMainLoop();
-	    break;
+            glutLeaveMainLoop();
+            break;
     }
     kbstat[key] = 1;
 }
@@ -157,7 +158,7 @@ int main(int argc, char *argv[]){
     glutKeyboardUpFunc(&keyboardUpCallback);
     glutDisplayFunc(&display);
     glutTimerFunc(0, &timerCallback, 0);
-    
+
     //Initialization
     init();
 

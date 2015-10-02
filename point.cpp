@@ -14,6 +14,6 @@ point point::mobius(complex c){
 }
 
 void point::print(){
-	printf("Point: ");
-	complex::print();
+    printf("Point: ");
+    complex::print();
 }

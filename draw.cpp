@@ -21,7 +21,7 @@ void drawArc(point center, double radius, double startarc, double endarc){
     double step = (endarc-startarc) / MAX, theta = startarc;
     for (int i = 0; i <= MAX; ++i){
         glVertex2d(radius*cos(theta) + center.getX(), radius*sin(theta) + center.getY());
-	theta += step;
+        theta += step;
     }
     glEnd();
 }
