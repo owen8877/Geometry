@@ -21,7 +21,7 @@ class complex{
         complex substraction(complex c);
         complex production(complex c);
         complex division(complex c);
-        complex reversion();
+        complex reciprocal();
         complex negative();
         double abs() const;
         double abs2() const;
@@ -57,20 +57,6 @@ class point : public complex{
         virtual void print();
 };
 
-/*
-// The class of straignt lines on the Poincare disk
-class line : public complex{
-    public:
-        line(double _x, double _y);
-        line(complex c);
-        point getCenter();
-        double getRadius();
-        double getStartArc();
-        double getEndArc();
-        line mobius(complex c);
-        virtual void print();
-};*/
-
 //Rewritten class line
 class line{
     private:
@@ -92,22 +78,6 @@ class line{
         line mobius(complex c);
         line rotate(complex c);
         virtual void print();
-};
-
-// The class of isometries (transforms that preserves distance) on the Poincare disk
-// Transform point z to e^(i*th)*(z-c)/(1-z*c.conj())
-class transform{
-    private:
-        double th;
-        complex c;
-    public:
-        transform(double theta):th(theta), c(0.0){}
-        transform(complex center):th(0.0), c(center){}
-        transform(double theta, complex center):th(theta), c(center){}
-        point operator ()(point p);
-        line operator ()(line l);
-        transform operator ()(transform t);
-        transform operator *(transform t);
 };
 
 // The class of isometries (transforms that preserves distance) on the Poincare disk

@@ -16,6 +16,5 @@ point getPointByDistance(point p, line l, double d){
             /
             ((A+B) - 2.0*p.conj()*l.getLeft())
             );
-
     //return (l.getLeft().mobius(p) * ((exp(d)-1) / (exp(d)+1))).mobius(-p);
 }

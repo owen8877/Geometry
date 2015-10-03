@@ -17,7 +17,7 @@ complex complex::addtion(complex c){ return complex(x + c.x, y + c.y); }
 complex complex::substraction(complex c){ return complex(x - c.x, y - c.y); }
 complex complex::production(complex c){ return complex((x*c.x - y*c.y), (x*c.y + y*c.x)); }
 complex complex::division(complex c){ double sqr = c.abs2(); return complex(((x*c.x + y*c.y)/sqr), ((y*c.x - x*c.y)/sqr)); }
-complex complex::reversion(){ double sqr = x*x + y*y; return complex(x/sqr, -y/sqr); }
+complex complex::reciprocal(){ double sqr = x*x + y*y; return complex(x/sqr, -y/sqr); }
 complex complex::negative(){ return complex(-x, -y); }
 double complex::abs()const{ return sqrt(x*x + y*y); }
 double complex::abs2()const{ return x*x + y*y; }
@@ -35,9 +35,5 @@ complex operator +(double a, const complex &b){ return complex(a + b.x, b.y); }
 complex operator -(double a, const complex &b){ return complex(a - b.x, -b.y); }
 complex operator *(double a, const complex &b){ return complex(a*b.x, a*b.y); }
 complex operator /(double a, const complex &b){ double sqr = b.abs2(); return complex((a*b.x/sqr), (-a*b.y)/sqr); }
-//complex operator +(complex const &a, double b){ return complex(a.x + b, a.y); }
-//complex operator -(complex const &a, double b){ return complex(a.x - b, a.y); }
-//complex operator *(complex const &a, double b){ return complex(a.x*b, a.y*b); }
-//complex operator /(complex const &a, double b){ return complex(a.x/b, a.y/b); }
 
 //bool complex::operator ==(const complex &c){ return (x == c.x) && (y == c.y); }
