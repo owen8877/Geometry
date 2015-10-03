@@ -1,6 +1,5 @@
 bin
-*.o
-makefile~
+*~
 Geometry.cbp
 Geometry.depend
 Geometry.layout
