@@ -1,5 +1,5 @@
-#ifndef _ELEMENT_H_
-#define _ELEMENT_H_
+#ifndef ELEMENT_H_
+#define ELEMENT_H_
 #include <math.h>
 
 // The class of complex numbers, use as intended.
