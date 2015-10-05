@@ -7,6 +7,9 @@
 using namespace std;
 
 int kbstat[256] = {0};
+int screenSize = 600;
+int screenWidth = 600;
+int screenHeight = 600;
 
 void init(){
     printf("--------Geometry test 0.0.0--------\n");
@@ -44,7 +47,7 @@ int main(int argc, char *argv[]){
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
     glutInitWindowPosition(100, 100);
-    glutInitWindowSize(_SCREEN_SIZE_, _SCREEN_SIZE_);
+    glutInitWindowSize(screenWidth, screenHeight);
     glutCreateWindow("Geometry");
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
@@ -53,6 +56,7 @@ int main(int argc, char *argv[]){
     glutKeyboardUpFunc(&keyboardUpCallback);
     glutDisplayFunc(&display);
     glutPassiveMotionFunc(&mouse);
+    glutReshapeFunc(&reshape);
     glutTimerFunc(0, &timerCallback, 0);
     //Initialization
     init();

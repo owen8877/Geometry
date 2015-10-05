@@ -7,6 +7,10 @@
 
 using namespace std;
 
+extern int screenSize;
+extern int screenWidth;
+extern int screenHeight;
+
 const int MAX = 100;
 const double TINY = 0.01;
 
@@ -92,6 +96,17 @@ void drawPoint(point p, int r, int g, int b){
     glEnd();
 }
 
+void reshape(int width, int height){
+    screenWidth = width;
+    screenHeight = height;
+    screenSize = (width < height ? width : height);
+    glViewport (0, 0, width, height);
+    glLoadIdentity ();
+    glOrtho (-(GLfloat)width / screenSize, (GLfloat)width / screenSize,
+            -(GLfloat)height / screenSize, (GLfloat)height / screenSize,
+            -2.0f, 2.0f);
+}
+
 void initDisplay(){
     glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
 }
@@ -108,11 +123,12 @@ void display(){
     drawLine(l);
     drawPoint(p, 0.02*(1 - p.abs2()) + 0.003 );
     point so_magic = getPointByDistance(p, l.getRight(), l, 1.0);
-    drawPoint(so_magic, r[0], g[0], b[0]);
+    glColor3i(r[0], g[0], b[0]);
+    drawPoint(so_magic, 0.02*(1 - so_magic.abs2()) + 0.003 );
     drawLine(getLineByAngle(p, so_magic, v[0], 0.7));
 
     for (unsigned int i = 0; i < v.size(); ++i){
-	glColor3i(r[i], g[i], b[i]);
+        glColor3i(r[i], g[i], b[i]);
         drawPoint(v[i], 0.02*(1 - v[i].abs2()) + 0.003 );
     }
 

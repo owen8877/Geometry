@@ -7,6 +7,10 @@
 
 using namespace std;
 
+extern int screenSize;
+extern int screenWidth;
+extern int screenHeight;
+
 complex x(0.03, 0);
 complex y(0, 0.03);
 complex rr = unit(0.05);
@@ -82,12 +86,12 @@ void update(int kbstat[]){
     }
 }
 
-void mouse(int _mousex, int _mousey){
-    _mousex -= _SCREEN_SIZE_ / 2;
-    _mousey -= _SCREEN_SIZE_ / 2;
-    _mousey = -_mousey;
-    double sq = sqrt(_mousex*_mousex+_mousey*_mousey);
-    complex _magic(_mousex/sq, _mousey/sq);
+void mouse(int mousex, int mousey){
+    mousex -= screenSize / 2;
+    mousey -= screenSize / 2;
+    mousey = -mousey;
+    double sq = sqrt(mousex*mousex + mousey*mousey);
+    complex _magic(mousex/sq, mousey/sq);
     //magic.print();
     //_magic.print();
     point d = getPointByDistance(complex(0.0, 0.0), line(_magic, complex(0.0, 0.0)), sq/200.0);
