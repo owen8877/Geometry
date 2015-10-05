@@ -19,6 +19,7 @@ complex complex::production(complex c){ return complex((x*c.x - y*c.y), (x*c.y +
 complex complex::division(complex c){ double sqr = c.abs2(); return complex(((x*c.x + y*c.y)/sqr), ((y*c.x - x*c.y)/sqr)); }
 complex complex::reciprocal(){ double sqr = x*x + y*y; return complex(x/sqr, -y/sqr); }
 complex complex::negative(){ return complex(-x, -y); }
+complex complex::normal(){ return complex(x/abs(), y/abs()); }
 double complex::abs()const{ return sqrt(x*x + y*y); }
 double complex::abs2()const{ return x*x + y*y; }
 double complex::arg()const{ return atan2(y,x); }

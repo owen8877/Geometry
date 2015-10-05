@@ -7,31 +7,12 @@
 using namespace std;
 
 int kbstat[256] = {0};
-const int _SCREEN_SIZE_ = 600;
 
 void init(){
     printf("--------Geometry test 0.0.0--------\n");
     printf("OpenGL Version %s\n\n", glGetString(GL_VERSION));
     initDisplay();
     initModel();
-}
-
-void mouse(int _mousex, int _mousey){
-    _mousex -= _SCREEN_SIZE_ / 2;
-    _mousey -= _SCREEN_SIZE_ / 2;
-    _mousey = -_mousey;
-    double sq = sqrt(_mousex*_mousex+_mousey*_mousey);
-    complex _magic(_mousex/sq, _mousey/sq);
-    //magic.print();
-    //_magic.print();
-    point d = getPointByDistance(complex(0.0, 0.0), line(_magic, complex(0.0, 0.0)), sq/200.0);
-    //d.print();
-    _magic = complex(d.getX(), d.getY());
-    _magic = -_magic;
-    mobius(-magic);
-    mobius(_magic);
-    //_magic.print();
-    magic = _magic;
 }
 
 void timerCallback(int index){

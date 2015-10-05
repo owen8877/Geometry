@@ -36,7 +36,7 @@ line::line(complex a, complex b){
     if (!u){
         //The line is a diameter!!!
         flag = true;
-        left = a / a.abs();//A bug may occur, when a is zero
+        (a.abs() < 1e-6) ? left = b.normal() : left = a.normal();
         right = -left;
         center = point();
         return;

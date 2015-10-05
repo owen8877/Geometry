@@ -106,8 +106,10 @@ void display(){
 
     glColor3f(0.0f, 1.0f, 1.0f);
     drawLine(l);
-    drawPoint(p);
-    drawPoint(getPointByDistance(p, l, 1.0), r[0], g[0], b[0]);
+    drawPoint(p, 0.02*(1 - p.abs2()) + 0.003 );
+    point so_magic = getPointByDistance(p, l.getRight(), l, 1.0);
+    drawPoint(so_magic, r[0], g[0], b[0]);
+    drawLine(getLineByAngle(p, so_magic, v[0], 0.7));
 
     for (unsigned int i = 0; i < v.size(); ++i){
 	glColor3i(r[i], g[i], b[i]);

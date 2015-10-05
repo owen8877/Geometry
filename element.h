@@ -23,6 +23,7 @@ class complex{
         complex division(complex c);
         complex reciprocal();
         complex negative();
+        complex normal();
         double abs() const;
         double abs2() const;
         double arg() const;
@@ -100,4 +101,7 @@ class transform{
 inline complex unit(double theta){ return complex(cos(theta), sin(theta)); }
 
 point getPointByDistance(point p, line l, double d);
+point getPointByDistance(point origin, point direction, line l, double d);
+line getLineByAngle(point p, line l, double fai);
+line getLineByAngle(point origin, point from_direction, point to_direction, double fai);
 #endif
