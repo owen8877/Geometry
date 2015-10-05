@@ -11,8 +11,8 @@ extern int screenSize;
 extern int screenWidth;
 extern int screenHeight;
 
-complex x(0.03, 0);
-complex y(0, 0.03);
+complex dx(0.03, 0);
+complex dy(0, 0.03);
 complex rr = unit(0.05);
 line l(1.0, 1.0);
 point p(0.2928, 0.2928);
@@ -68,10 +68,10 @@ void initModel(){
 }
 
 void update(int kbstat[]){
-    if (kbstat['w']) mobius(-y);
-    if (kbstat['s']) mobius(y);
-    if (kbstat['a']) mobius(x);
-    if (kbstat['d']) mobius(-x);
+    if (kbstat['w']) mobius(-dy);
+    if (kbstat['s']) mobius(dy);
+    if (kbstat['a']) mobius(dx);
+    if (kbstat['d']) mobius(-dx);
     if (kbstat['q']) rotate(rr);
     if (kbstat['e']) rotate(rr.conj());
     if (kbstat['m']) {
@@ -86,21 +86,12 @@ void update(int kbstat[]){
     }
 }
 
-void mouse(int mousex, int mousey){
-    mousex -= screenSize / 2;
-    mousey -= screenSize / 2;
-    mousey = -mousey;
-    double sq = sqrt(mousex*mousex + mousey*mousey);
-    complex _magic(mousex/sq, mousey/sq);
-    //magic.print();
-    //_magic.print();
-    point d = getPointByDistance(complex(0.0, 0.0), line(_magic, complex(0.0, 0.0)), sq/200.0);
-    //d.print();
-    _magic = complex(d.getX(), d.getY());
-    _magic = -_magic;
-    mobius(-magic);
-    mobius(_magic);
-    //_magic.print();
-    magic = _magic;
+void renewMouseStat(double x, double y, int button){
+    static int button_old = 0;
+    static double x_old = 0, y_old = 0;
+    if (LEFT_MOUSE_BUTTON & button & button_old) {
+        mobius(-complex(x-x_old, y-y_old));
+    }
+    button_old = button;
+    x_old = x; y_old = y;
 }
-
