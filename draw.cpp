@@ -121,11 +121,11 @@ void display(){
 
     glColor3f(0.0f, 1.0f, 1.0f);
     drawLine(l);
-    drawPoint(p, 0.02*(1 - p.abs2()) + 0.003 );
-    point so_magic = getPointByDistance(p, l.getRight(), l, 1.0);
-    glColor3i(r[0], g[0], b[0]);
-    drawPoint(so_magic, 0.02*(1 - so_magic.abs2()) + 0.003 );
-    drawLine(getLineByAngle(p, so_magic, v[0], 0.7));
+    //drawPoint(p, 0.02*(1 - p.abs2()) + 0.003 );
+    //point so_magic = getPointByDistance(p, l.getRight(), l, 1.0);
+    //glColor3i(r[0], g[0], b[0]);
+    //drawPoint(so_magic, 0.02*(1 - so_magic.abs2()) + 0.003 );
+    //drawLine(getLineByAngle(p, so_magic, v[0], 0.7));
 
     for (unsigned int i = 0; i < v.size(); ++i){
         glColor3i(r[i], g[i], b[i]);
@@ -136,7 +136,7 @@ void display(){
     char str[257];
     sprintf(str, "FPS: %d\n", getfps());
     glColor3f(1.0f, 1.0f, 0.5f);
-    glRasterPos2d(-1, 1-0.03);
+    glRasterPos2d(-1, 1 - 24.0/screenSize);
     glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)str);
 
     //Flush the drawing process

@@ -9,11 +9,29 @@ point::point(double _x, double _y):complex(_x, _y){}
 point::point(complex c):complex(c){}
 
 point point::mobius(complex c){
-    //return point(substraction(c).division(complex(1,0).substraction(production(c.conj()))));
     return point(((*this) - c)/(1.0 - (*this)*c.conj()));
 }
 
 void point::print(){
     printf("Point: ");
+    complex::print();
+}
+
+ideal::ideal(complex c){
+    if (c.abs2() < 1e-6)
+        throw "Error getting an ideal point by origin.\n";
+    *((complex *)this) = c.normal();
+}
+
+ideal ideal::mobius(complex c){
+    return ideal( ((*this) - c) / (1.0 - (*this)*c.conj()) );
+}
+
+ideal ideal::rotate(double theta){
+    return ideal((*this)*unit(theta));
+}
+
+void ideal::print(){
+    printf("Ideal Point: ");
     complex::print();
 }

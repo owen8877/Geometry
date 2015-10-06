@@ -30,10 +30,10 @@ point getPointByDistance(point origin, point direction, line l, double d){
 }
 
 line getLineByAngle(point p, line l, double fai){
-    return (line(l.getLeft().mobius(p)*unit(fai), complex(0.0))).mobius(-p);
+    return (line(point(l.getLeft().mobius(p)*unit(fai)), point(0.0))).mobius(-p);
 }
 
 line getLineByAngle(point origin, point from_direction, point to_direction, double fai){
     int flag = ((to_direction.mobius(origin)/from_direction.mobius(origin)).arg() > 0.0) ? 1 : -1;
-    return (line(from_direction.mobius(origin).normal()*unit(flag * fai), complex(0.0))).mobius(-origin);
+    return (line(point(from_direction.mobius(origin).normal()*unit(flag * fai)), point(0.0))).mobius(-origin);
 }

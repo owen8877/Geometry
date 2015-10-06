@@ -51,20 +51,17 @@ void rotate(complex c){
     for (unsigned int i = 0; i < v.size(); ++i){
         v[i] = v[i]*c;
     }
-    l = l.rotate(c);
+    l = l.rotate(c.arg());
     p = p*c;
     return;
 }
 
 void initModel(){
-    for (int i = 0;i < 1;i++){
+    for (int i = 0;i < 10;i++){
         new_point_in_v();
         printf("%f %f %d\n", v[i].getX(), v[i].getY(), i);
     }
-    new_point_in_v(p);
-    new_point_in_v(l.getLeft());
-    new_point_in_v(l.getRight());
-    //getPointByDistance(p, l, true, 1.0).print();
+    l = line(v[0], v[1]);
 }
 
 void update(int kbstat[]){
