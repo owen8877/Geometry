@@ -18,6 +18,7 @@ extern vector<point> v;
 extern vector<line> l;
 extern vector<int> vr, vg, vb;
 extern vector<int> lr, lg, lb;
+extern transform t;
 
 int getfps(){
     static int count = 0, fps = 0;
@@ -67,11 +68,12 @@ void drawLine(line l){
 }
 
 void drawPoint(point p){
+    double size = 0.02*(1 - p.abs2()) + 0.003;
     glBegin(GL_POLYGON);
-    glVertex2d(p.getX()-TINY, p.getY()-TINY);
-    glVertex2d(p.getX()-TINY, p.getY()+TINY);
-    glVertex2d(p.getX()+TINY, p.getY()+TINY);
-    glVertex2d(p.getX()+TINY, p.getY()-TINY);
+    glVertex2d(p.getX()-size, p.getY()-size);
+    glVertex2d(p.getX()-size, p.getY()+size);
+    glVertex2d(p.getX()+size, p.getY()+size);
+    glVertex2d(p.getX()+size, p.getY()-size);
     glEnd();
 }
 
@@ -119,12 +121,12 @@ void display(){
 
     for (unsigned int i = 0; i < l.size(); ++i){
         glColor3i(lr[i], lg[i], lb[i]);
-        drawLine(l[i]);
+        drawLine( t(l[i]) );
     }
 
     for (unsigned int i = 0; i < v.size(); ++i){
         glColor3i(vr[i], vg[i], vb[i]);
-        drawPoint(v[i], 0.02*(1 - v[i].abs2()) + 0.003 );
+        drawPoint( t(v[i]) );
     }
 
     //Drawing text infomation

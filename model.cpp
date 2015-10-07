@@ -19,6 +19,7 @@ vector<point> v;
 vector<line> l;
 vector<int> vr, vg, vb;
 vector<int> lr, lg, lb;
+transform t(0.0);
 
 void new_point_in_v(){
     double ran = (double) rand()/RAND_MAX*2 - 1;
@@ -33,26 +34,6 @@ void new_point_in_v(point _p){
     vg.push_back(rand());
     vb.push_back(rand());
     v.push_back(_p);
-}
-
-void mobius(complex c){
-    for (unsigned int i = 0; i < l.size(); ++i){
-        l[i] = l[i].mobius(c);
-    }
-    for (unsigned int i = 0; i < v.size(); ++i){
-        v[i] = v[i].mobius(c);
-    }
-    return;
-}
-
-void rotate(double phi){
-    for (unsigned int i = 0; i < v.size(); ++i){
-        v[i] = v[i]*unit(phi);
-    }
-    for (unsigned int i = 0; i < l.size(); ++i){
-        l[i] = l[i].rotate(phi);
-    }
-    return;
 }
 
 void initModel(){
@@ -72,14 +53,14 @@ void initModel(){
 }
 
 void update(int kbstat[]){
-    if (kbstat['w']) mobius(-dy);
-    if (kbstat['s']) mobius(dy);
-    if (kbstat['a']) mobius(dx);
-    if (kbstat['d']) mobius(-dx);
-    if (kbstat['q']) rotate(rr);
-    if (kbstat['e']) rotate(-rr);
+    if (kbstat['w']) t = transform(-dy) * t;
+    if (kbstat['s']) t = transform(dy) * t;
+    if (kbstat['a']) t = transform(dx) * t;
+    if (kbstat['d']) t = transform(-dx) * t;
+    if (kbstat['q']) t = transform(rr) * t;
+    if (kbstat['e']) t = transform(-rr) * t;
     if (kbstat['l']) {
-        if (0 < v.size()) mobius(v[0]);
+        if (0 < v.size()) t = transform(v[0]);
         kbstat['l'] = 0;
     }
 }
@@ -88,7 +69,7 @@ void renewMouseStat(double x, double y, int button){
     static int button_old = 0;
     static double x_old = 0, y_old = 0;
     if (LEFT_MOUSE_BUTTON & button & button_old) {
-        mobius(-complex(x-x_old, y-y_old));
+        t = transform(-complex(x-x_old, y-y_old))*t;
     }
     button_old = button;
     x_old = x; y_old = y;
