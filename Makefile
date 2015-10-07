@@ -42,9 +42,9 @@ bin/model.o : model.cpp element.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 cleanbackup :
-	rm -f *~ *.orig
+	rm -vf *~ *.orig
 
 cb : cleanbackup
 
 clean :
-	rm -f $(BIN) $(OBJ)
+	rm -vf $(BIN) $(OBJ)

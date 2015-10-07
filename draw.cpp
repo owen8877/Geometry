@@ -14,12 +14,10 @@ extern int screenHeight;
 const int MAX = 100;
 const double TINY = 0.01;
 
-extern line l;
-extern point p;
 extern vector<point> v;
-extern vector<int> r;
-extern vector<int> g;
-extern vector<int> b;
+extern vector<line> l;
+extern vector<int> vr, vg, vb;
+extern vector<int> lr, lg, lb;
 
 int getfps(){
     static int count = 0, fps = 0;
@@ -119,16 +117,13 @@ void display(){
     glColor3f(1.0f, 1.0f, 1.0f);
     drawCircle(point(0.0, 0.0), 1.0);
 
-    glColor3f(0.0f, 1.0f, 1.0f);
-    drawLine(l);
-    //drawPoint(p, 0.02*(1 - p.abs2()) + 0.003 );
-    //point so_magic = getPointByDistance(p, l.getRight(), l, 1.0);
-    //glColor3i(r[0], g[0], b[0]);
-    //drawPoint(so_magic, 0.02*(1 - so_magic.abs2()) + 0.003 );
-    //drawLine(getLineByAngle(p, so_magic, v[0], 0.7));
+    for (unsigned int i = 0; i < l.size(); ++i){
+        glColor3i(lr[i], lg[i], lb[i]);
+        drawLine(l[i]);
+    }
 
     for (unsigned int i = 0; i < v.size(); ++i){
-        glColor3i(r[i], g[i], b[i]);
+        glColor3i(vr[i], vg[i], vb[i]);
         drawPoint(v[i], 0.02*(1 - v[i].abs2()) + 0.003 );
     }
 

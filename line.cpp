@@ -24,6 +24,16 @@ line::line(point a, point b){
     right = (u - v)/w;
 }
 
+line::line(ideal a, point b){
+    left = a;
+    right = -a*(1 + b.abs2() - 2*a.conj()*b)/(1 + b.abs2() - 2*a*b.conj());
+}
+
+line::line(point a, ideal b){
+    left = -b*(1 + a.abs2() - 2*b.conj()*a)/(1 + a.abs2() - 2*b*a.conj());
+    right = b;
+}
+
 bool line::isDiameter(){ return ((left + right).abs() < 1e-6); }
 
 complex line::getCenter(){

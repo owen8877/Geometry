@@ -110,16 +110,18 @@ class transform{
 
         point operator ()(point p);
         line operator ()(line l);
+        ideal operator ()(ideal q);
         transform operator ()(transform t);
         transform operator *(transform t);
+        transform inversion();
 };
 
 // returns a complex with radius 1 and argument theta
-inline complex unit(double theta){ return complex(cos(theta), sin(theta)); }
+inline complex unit(double theta){
+    return complex(cos(theta), sin(theta));
+}
 
 point getPointByDistance(point p, ideal q, double d);
-point getPointByDistance(point origin, point direction, line l, double d);
-line getLineByAngle(point p, line l, double fai);
-line getLineByAngle(point origin, point from_direction, point to_direction, double fai);
+line getLineByAngle(point p, ideal q, double phi);
 
 #endif
