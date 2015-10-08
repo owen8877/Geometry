@@ -1,3 +1,7 @@
 This is a test project to illustrate the Hyperbolic geometry, one of the two types of Non-Euclidean geometries.
 
+The code uses the library freeglut, so run
+  apt-get install freeglut
+before compiling.
+
 Now being written by owen and shsty.
