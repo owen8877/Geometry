@@ -70,19 +70,19 @@ void initModel(){
 
 bool checkCollision(){
     if (PoincareDistance(complex(0.0), *snake.begin()) >= boundRadius){
-        printf("You reached the boundary. You lose!!!\n");
+        printf("You reached the boundary.\n");
         return true;
     }
     for (deque<point>::iterator it = ++snake.begin(); it != snake.end(); ++it){
         if (PoincareDistance(*snake.begin(), *it) >= snakeStep*.99) continue;
-        printf("You ate yourself. You lose!!!\n");
+        printf("You ate yourself.\n");
         return true;
     }
     return false;
 }
 
 bool checkFood(){
-    return (PoincareDistance(food, *snake.begin()) <= snakeStep*1.5);
+    return (PoincareDistance(food, *snake.begin()) <= snakeStep);
 }
 
 
@@ -103,6 +103,8 @@ void update(int kbstat[]){
         else snake.pop_back();
 
         if (checkCollision()){
+            printf("You lose! Score: %d\n\n", score);
+            fflush(stdout);
             initModel();
             frameCount = 0;
             snakeDirNext = 0;

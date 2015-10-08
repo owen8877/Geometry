@@ -24,6 +24,7 @@ extern deque<point> snake;
 extern double snakeStep;
 extern double boundRadius;
 extern point food;
+extern int score;
 
 const double snakeWidth = snakeStep / 2.0;
 
@@ -166,6 +167,12 @@ void display(){
     glColor3f(1.0f, 0.0f, 0.0f);
     drawPoincareCircle(t(point(0.0)), boundRadius);
 
+    const int circles = 10;
+    for (int i = 1; i < circles; ++i){
+        glColor3f(0.2f*i/circles, 0.0f, 0.0f);
+        drawPoincareCircle(t(point(0.0)), boundRadius*i/circles);
+    }
+
     deque<point>::iterator it = snake.begin();
     glColor3f(0.3f, 1.0f, 0.3f);
     drawPoincareCircle(t(*it), snakeWidth * 1.5, true);
@@ -177,7 +184,7 @@ void display(){
 
     //Drawing text infomation
     char str[257];
-    sprintf(str, "FPS: %d\n", getfps());
+    sprintf(str, "Score: %d\n", score);
     glColor3f(1.0f, 1.0f, 0.5f);
     glRasterPos2d(-1, 1 - 24.0/screenSize);
     glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)str);
