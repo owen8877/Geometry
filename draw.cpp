@@ -19,6 +19,10 @@ extern vector<line> l;
 extern vector<int> vr, vg, vb;
 extern vector<int> lr, lg, lb;
 extern transform t;
+extern vector<point> snake;
+extern const double snakeStep;
+extern const double boundRadius;
+
 
 int getfps(){
     static int count = 0, fps = 0;
@@ -38,6 +42,19 @@ void drawCircle(point center, double radius){
     for (int i = 0;i < MAX;i++){
         theta = 2 * M_PI * i / MAX;
         glVertex2d(radius*cos(theta)+center.getX(), radius*sin(theta)+center.getY());
+    }
+    glEnd();
+}
+
+void drawPoincareCircle(point center, double radius){
+    glBegin(GL_LINE_LOOP);
+    double D = (exp(radius) - 1) / (exp(radius) + 1);
+    point centerToBeDrawn = point(center * ((D*D-1)/(center.abs2()*D*D-1)));
+    double radiusToBeDrawn = D * (center.abs2() - 1) / (center.abs2()*D*D - 1);
+    double theta;
+    for (int i = 0;i < MAX;i++){
+        theta = 2 * M_PI * i / MAX;
+        glVertex2d(radiusToBeDrawn*cos(theta)+centerToBeDrawn.getX(), radiusToBeDrawn*sin(theta)+centerToBeDrawn.getY());
     }
     glEnd();
 }
@@ -119,15 +136,10 @@ void display(){
     glColor3f(1.0f, 1.0f, 1.0f);
     drawCircle(point(0.0, 0.0), 1.0);
 
-    for (unsigned int i = 0; i < l.size(); ++i){
-        glColor3i(lr[i], lg[i], lb[i]);
-        drawLine( t(l[i]) );
-    }
+    //for (unsigned int i = 0; i < v.size(); ++i) drawPoint(t(v[i]));
+    //for (unsigned int i = 0; i < l.size(); ++i) drawLine(t(l[i]));
+    //drawPoincareCircle(t(v[0]), 1.0);
 
-    for (unsigned int i = 0; i < v.size(); ++i){
-        glColor3i(vr[i], vg[i], vb[i]);
-        drawPoint( t(v[i]) );
-    }
 
     //Drawing text infomation
     char str[257];
