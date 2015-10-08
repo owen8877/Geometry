@@ -66,6 +66,7 @@ class ideal : public complex{
         ideal():complex(1.0, 0.0){}
         ideal(double theta):complex(cos(theta), sin(theta)){}
         ideal(complex c);
+        ideal(double _x, double _y);
 
         ideal mobius(complex c);
         ideal rotate(double theta);

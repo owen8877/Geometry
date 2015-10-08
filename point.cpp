@@ -27,6 +27,12 @@ ideal::ideal(complex c){
     *((complex *)this) = c.normal();
 }
 
+ideal::ideal(double _x, double _y){
+    if (_x*_x + _y*_y < 1e-6)
+        throw "Error getting an ideal point by origin.\n";
+    *((complex *)this) = complex(_x, _y).normal();
+}
+
 ideal ideal::mobius(complex c){
     return ideal( ((*this) - c) / (1.0 - (*this)*c.conj()) );
 }

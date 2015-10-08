@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <vector>
+#include <deque>
 #include "element.h"
 #include "model.h"
 
@@ -20,6 +21,17 @@ vector<line> l;
 vector<int> vr, vg, vb;
 vector<int> lr, lg, lb;
 transform t(0.0);
+
+deque<point> snake;
+point food;
+double snakeStep = 0.2;
+double boundRadius = 5;
+ideal northDir(1.0, 0.0);
+int snakeDir = 0;
+int snakeInc;
+
+const ideal dirs[4] = {ideal(0.0, 1.0), ideal(-1.0, 0.0), ideal(0.0, -1.0), ideal(1.0, 0.0)};
+point steps[4];
 
 void new_point_in_v(){
     double ran = (double) rand()/RAND_MAX*2 - 1;
@@ -44,38 +56,41 @@ void add_line(line _l){
 }
 
 void initModel(){
-    double a = sin(M_PI/42)/sqrt(( cos(2*M_PI/3)+cos(2*M_PI/7) )/2);
-    for (int i = 0; i < 3; ++i){
-        add_point(point(a*unit(i*M_PI*2/3)));
-    }
-    for (int i = 2; i < 7; ++i){
-        add_point(rotateByPoint(v[i], v[0], 2*M_PI/7));
-    }
-    for (int i = 0; i < 7; ++i){
-        add_line(line(v[0], v[i+1]));
-        add_line(line(v[i+1], v[(i+1)%7+1]));
-    }
+    for (int i = 0; i < 4; ++i) steps[i] = getPointByDistance(point(0.0), dirs[i], snakeStep);
+    snake.push_back(point(0.0, 0.0));
+    northDir = ideal(1.0, 0.0);
+    snakeDir = 0;
+    snakeInc = 30;
 }
 
 void update(int kbstat[]){
-    if (kbstat['w']) t = transform(-dy) * t;
-    if (kbstat['s']) t = transform(dy) * t;
-    if (kbstat['a']) t = transform(dx) * t;
-    if (kbstat['d']) t = transform(-dx) * t;
-    if (kbstat['q']) t = transform(rr) * t;
-    if (kbstat['e']) t = transform(-rr) * t;
-    if (kbstat['l']) {
-        if (0 < v.size()) t = transform(v[0]);
-        kbstat['l'] = 0;
+    static int stepInterval = 5 ,frameCount = 1;
+    static int snakeDirNext = 0;
+    if (kbstat['w']) snakeDirNext = 0; 
+    if (kbstat['a']) snakeDirNext = 1; 
+    if (kbstat['s']) snakeDirNext = 2; 
+    if (kbstat['d']) snakeDirNext = 3; 
+    if (stepInterval == frameCount){
+        
+        if ((snakeDirNext + snakeDir)%2) snakeDir = snakeDirNext;
+        snake.push_front(t.inversion()(steps[snakeDir]));
+        t = transform(steps[snakeDir]) * t;
+        if (snakeInc > 0) snakeInc--;
+        else snake.pop_back();
+
+        frameCount = 0;
     }
+    ++frameCount;
 }
 
 void renewMouseStat(double x, double y, int button){
     static int button_old = 0;
     static double x_old = 0, y_old = 0;
+    /*
     if (LEFT_MOUSE_BUTTON & button & button_old) {
         t = transform(-complex(x-x_old, y-y_old))*t;
     }
+    */
     button_old = button;
     x_old = x; y_old = y;
 }
