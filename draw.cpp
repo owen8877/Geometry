@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <vector>
+#include <deque>
 #include <time.h>
 #include "element.h"
 
@@ -19,10 +20,12 @@ extern vector<line> l;
 extern vector<int> vr, vg, vb;
 extern vector<int> lr, lg, lb;
 extern transform t;
-extern vector<point> snake;
+extern deque<point> snake;
 extern const double snakeStep;
 extern const double boundRadius;
+extern point food;
 
+const double snakeWidth = snakeStep / 2.0;
 
 int getfps(){
     static int count = 0, fps = 0;
@@ -52,6 +55,25 @@ void drawPoincareCircle(point center, double radius){
     point centerToBeDrawn = point(center * ((D*D-1)/(center.abs2()*D*D-1)));
     double radiusToBeDrawn = D * (center.abs2() - 1) / (center.abs2()*D*D - 1);
     double theta;
+    for (int i = 0;i < MAX;i++){
+        theta = 2 * M_PI * i / MAX;
+        glVertex2d(radiusToBeDrawn*cos(theta)+centerToBeDrawn.getX(), radiusToBeDrawn*sin(theta)+centerToBeDrawn.getY());
+    }
+    glEnd();
+}
+
+//The third argument indicates whether the circle is solid or not.
+void drawPoincareCircle(point center, double radius, bool flagSolid){
+    if (!flag){
+        drawPoincareCircle(center, radius);
+        return;
+    }
+    glBegin(GL_TRIANGLE_FAN);
+    double D = (exp(radius) - 1) / (exp(radius) + 1);
+    point centerToBeDrawn = point(center * ((D*D-1)/(center.abs2()*D*D-1)));
+    double radiusToBeDrawn = D * (center.abs2() - 1) / (center.abs2()*D*D - 1);
+    double theta;
+    glVertex2d(centerToBeDrawn.getX(), centerToBeDrawn.getY());
     for (int i = 0;i < MAX;i++){
         theta = 2 * M_PI * i / MAX;
         glVertex2d(radiusToBeDrawn*cos(theta)+centerToBeDrawn.getX(), radiusToBeDrawn*sin(theta)+centerToBeDrawn.getY());
@@ -140,6 +162,13 @@ void display(){
     //for (unsigned int i = 0; i < l.size(); ++i) drawLine(t(l[i]));
     //drawPoincareCircle(t(v[0]), 1.0);
 
+    drawPoincareCircle(t(0.0), boundRadius);
+
+    deque<point>::iterator it = snake.begin();
+    drawPoincareCircle(t(*it), snakeWidth * 2, true);
+    for (++it; it != snake.end(); ++it) drawPoincareCircle(t(*it), snakeWidth, true);
+
+    drawPoint(food);
 
     //Drawing text infomation
     char str[257];
