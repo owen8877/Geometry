@@ -150,12 +150,14 @@ void initDisplay(){
 }
 
 void display(){
+    //transform t(0.0);
+ 
     //Clearing buffer
     glClear(GL_COLOR_BUFFER_BIT);
 
     //Drawing objects
     glColor3f(1.0f, 1.0f, 1.0f);
-    drawCircle(point(0.0, 0.0), 1.0);
+    //drawCircle(point(0.0, 0.0), 1.0);
 
     //for (unsigned int i = 0; i < v.size(); ++i) drawPoint(t(v[i]));
     //for (unsigned int i = 0; i < l.size(); ++i) drawLine(t(l[i]));
@@ -170,7 +172,8 @@ void display(){
     glColor3f(0.0f, 0.7f, 0.0f);
     for (++it; it != snake.end(); ++it) drawPoincareCircle(t(*it), snakeWidth, true);
 
-    drawPoint(food);
+    glColor3f(1.0f, 0.5f, 1.0f);
+    drawPoint(t(food));
 
     //Drawing text infomation
     char str[257];

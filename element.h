@@ -129,5 +129,7 @@ inline complex unit(double theta){
 point getPointByDistance(point p, ideal q, double d);
 point rotateByPoint(point p, point center, double phi);
 line getLineByAngle(point p, ideal q, double phi);
+double PoincareDistance(point p1, point p2);
+point randPoint();
 
 #endif
