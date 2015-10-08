@@ -12,6 +12,10 @@ point getPointByDistance(point p, ideal q, double d){
     return point( q.mobius(p) * ((exp(d)-1) / (exp(d)+1)) ).mobius(-p);
 }
 
+point rotateByPoint(point p, point center, double phi){
+    return p.mobius(center).rotate(phi).mobius(-center);
+}
+
 /*
     This function needs three arguments:
         point p : the original point;

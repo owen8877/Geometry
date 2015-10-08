@@ -53,6 +53,7 @@ class point : public complex{
         point(complex c);
 
         point mobius(complex c);
+        point rotate(double theta);
 
         virtual void print();
 };
@@ -97,6 +98,9 @@ class line{
         virtual void print();
 };
 
+class segment : public line{
+};
+
 // The class of isometries (transforms that preserves distance) on the Poincare disk
 // Transform point z to e^(i*th)*(z-c)/(1-z*c.conj())
 class transform{
@@ -122,6 +126,7 @@ inline complex unit(double theta){
 }
 
 point getPointByDistance(point p, ideal q, double d);
+point rotateByPoint(point p, point center, double phi);
 line getLineByAngle(point p, ideal q, double phi);
 
 #endif

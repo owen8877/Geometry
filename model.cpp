@@ -29,26 +29,31 @@ void new_point_in_v(){
     v.push_back(point(ran, ((double)rand()/RAND_MAX*2-1)*sqrt(1-ran*ran)));
 }
 
-void new_point_in_v(point _p){
+void add_point(point _p){
     vr.push_back(rand());
     vg.push_back(rand());
     vb.push_back(rand());
     v.push_back(_p);
 }
 
+void add_line(line _l){
+    lr.push_back(rand());
+    lg.push_back(rand());
+    lb.push_back(rand());
+    l.push_back(_l);
+}
+
 void initModel(){
-    for (int i = 0; i < 7; ++i){
-        new_point_in_v(point(0.5*unit(i*M_PI*2/7)));
+    double a = sin(M_PI/42)/sqrt(( cos(2*M_PI/3)+cos(2*M_PI/7) )/2);
+    for (int i = 0; i < 3; ++i){
+        add_point(point(a*unit(i*M_PI*2/3)));
+    }
+    for (int i = 2; i < 7; ++i){
+        add_point(rotateByPoint(v[i], v[0], 2*M_PI/7));
     }
     for (int i = 0; i < 7; ++i){
-        lr.push_back(rand());
-        lg.push_back(rand());
-        lb.push_back(rand());
-        l.push_back(line(v[i], v[(i+1)%7]));
-        lr.push_back(rand());
-        lg.push_back(rand());
-        lb.push_back(rand());
-        l.push_back(line(v[i], v[(i+2)%7]));
+        add_line(line(v[0], v[i+1]));
+        add_line(line(v[i+1], v[(i+1)%7+1]));
     }
 }
 

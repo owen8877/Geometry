@@ -12,6 +12,10 @@ point point::mobius(complex c){
     return point(((*this) - c)/(1.0 - (*this)*c.conj()));
 }
 
+point point::rotate(double theta){
+    return point((*this)*unit(theta));
+}
+
 void point::print(){
     printf("Point: ");
     complex::print();
