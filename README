@@ -1,7 +1,18 @@
 This is a test project to illustrate the Hyperbolic geometry, one of the two types of Non-Euclidean geometries.
 
-The code uses the library freeglut, so run
-  apt-get install freeglut
-before compiling.
+The project uses the library freeglut.
 
-Now being written by owen and shsty.
+----------------------------------
+To compile the project(Linux), run
+    make
+the game shall be generated in the bin/ directory of the name Geometry
+
+----------------------------------
+To cross-compile the project for Windows on a Linux machine, install MinGW by entering
+    sudo apt-get install mingw32
+then run
+    make -f Makefile.win
+the game shall be generated in the bin_win/ directory of the name Geometry.exe
+----------------------------------
+
+Written by owen8877 and shsty.

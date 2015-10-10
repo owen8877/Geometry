@@ -1,13 +1,13 @@
 #Project Geometry test
 
-DIR = bin
-BIN = $(DIR)/Geometry
+DIR = bin_win
+BIN = $(DIR)/Geometry.exe
 OBJ = $(DIR)/main.o $(DIR)/draw.o $(DIR)/complex.o $(DIR)/point.o $(DIR)/line.o $(DIR)/element.o $(DIR)/transform.o $(DIR)/model.o
-LIB = -Wl,-Bstatic -lglut -Wl,-Bdynamic -lGL -lX11 -lXxf86vm -lXrandr -lXi -g3 -Wl,-rpath,freeglut
-CXX = g++
-CXXFLAGS = -I"freeglut/include" -Wall -g3
+LIB = -L'freeglut-MinGW-3.0.0-1.mp/freeglut/lib' -lfreeglut_static -lopengl32 -lwinmm -lgdi32 -Wl,--subsystem,windows -g3
+CXX = i586-mingw32msvc-g++
+CXXFLAGS = -Wall -g3 -DFREEGLUT_STATIC -I'freeglut-MinGW-3.0.0-1.mp/freeglut/include'
 
-.PHONY: test clean cleanbackup cb win
+.PHONY: test clean cleanbackup cb
 
 $(BIN): $(DIR) $(OBJ)
 	$(CXX) $(OBJ) -o $(BIN) $(LIB)
