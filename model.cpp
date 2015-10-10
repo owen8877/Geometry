@@ -17,6 +17,8 @@ double rr = 0.05;
 
 vector<point> v;
 vector<line> l;
+vector<segment> s;
+vector<int> sr, sg, sb;
 vector<int> vr, vg, vb;
 vector<int> lr, lg, lb;
 transform t(0.0);
@@ -43,6 +45,13 @@ void add_line(line _l){
     l.push_back(_l);
 }
 
+void add_segment(segment _s){
+    sr.push_back(rand());
+    sg.push_back(rand());
+    sb.push_back(rand());
+    s.push_back(_s);
+}
+
 void initModel(){
     double a = sin(M_PI/42)/sqrt(( cos(2*M_PI/3)+cos(2*M_PI/7) )/2);
     for (int i = 0; i < 3; ++i){
@@ -55,6 +64,9 @@ void initModel(){
         add_line(line(v[0], v[i+1]));
         add_line(line(v[i+1], v[(i+1)%7+1]));
     }
+    add_point(point(0.7, 0.5));
+    add_point(point(0.6, 0.2));
+    add_segment(segment(point(0.7,0.5), point(0.6, 0.2)));
 }
 
 void update(int kbstat[]){

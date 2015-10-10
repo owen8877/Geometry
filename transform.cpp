@@ -14,6 +14,10 @@ ideal transform::operator ()(ideal q){
     return q.mobius(c).rotate(th);
 }
 
+segment transform::operator ()(segment s){
+    return s.mobius(c).rotate(th);
+}
+
 transform transform::operator ()(transform t){
     complex e = unit(t.th);
     return transform( th + ( (e + t.c.conj()*c) / (1 + t.c*c.conj()*e) ).arg() ,

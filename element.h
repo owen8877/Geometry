@@ -1,6 +1,7 @@
 #ifndef ELEMENT_H_
 #define ELEMENT_H_
 #include <math.h>
+#include <GL/glut.h>
 
 // The class of complex numbers, use as intended.
 class complex{
@@ -55,6 +56,8 @@ class point : public complex{
         point mobius(complex c);
         point rotate(double theta);
 
+        GLdouble* getGLVector();
+
         virtual void print();
 };
 
@@ -99,6 +102,20 @@ class line{
 };
 
 class segment : public line{
+    private:
+        point start, end;
+    public:
+	segment(point a, point b);
+
+        point getStart();
+        point getEnd();
+
+        double getLength();
+
+        segment mobius(complex c);
+        segment rotate(double theta);
+
+	virtual void print();
 };
 
 // The class of isometries (transforms that preserves distance) on the Poincare disk
@@ -115,6 +132,7 @@ class transform{
         point operator ()(point p);
         line operator ()(line l);
         ideal operator ()(ideal q);
+        segment operator ()(segment s);
         transform operator ()(transform t);
         transform operator *(transform t);
         transform inversion();

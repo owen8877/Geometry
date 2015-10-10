@@ -4,6 +4,7 @@
 void drawCircle(point center, double radius);
 void drawArc(point center, double radius, double startarc, double endarc);
 void drawLine(line l);
+void drawSegment(segment s);
 void drawPoint(point p);
 void drawPoint(point p, double size);
 void drawPoint(point p, int r, int g, int b);

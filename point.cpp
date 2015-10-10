@@ -16,6 +16,13 @@ point point::rotate(double theta){
     return point((*this)*unit(theta));
 }
 
+GLdouble* point::getGLVector(){
+    GLdouble* g = new GLdouble[2];
+    g[0] = x;
+    g[1] = y;
+    return g;
+}
+
 void point::print(){
     printf("Point: ");
     complex::print();

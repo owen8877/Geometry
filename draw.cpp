@@ -18,6 +18,8 @@ extern vector<point> v;
 extern vector<line> l;
 extern vector<int> vr, vg, vb;
 extern vector<int> lr, lg, lb;
+extern vector<segment> s;
+extern vector<int> sr, sg, sb;
 extern transform t;
 
 int getfps(){
@@ -65,6 +67,35 @@ void drawLine(line l){
     double start = middle - deflection;
     double end = middle + deflection;
     drawArc(l.getCenter(), l.getRadius(), start, end);
+}
+
+void drawSegment(segment s){
+    if (s.isDiameter()){
+        glBegin(GL_LINE_STRIP);
+        glVertex2d(s.getStart().getX(), s.getStart().getY());
+        glVertex2d(s.getEnd().getX(), s.getEnd().getY());
+        glEnd();
+        return;
+    }
+    /*
+    double middle = atan2(s.getCenter().getY(), s.getCenter().getX()) + M_PI;
+    double deflection = atan(1/s.getRadius());
+    double left = middle - deflection;
+    double start = left + ((s.getStart() - s.getCenter())/(s.getLeft() - s.getCenter())).arg();
+    double end = left + ((s.getEnd() - s.getCenter())/(s.getLeft() - s.getCenter())).arg();
+    drawArc(s.getCenter(), s.getRadius(), start, end);
+    */
+    glBegin(GL_LINE_STRIP);
+    //double step = (endarc-startarc) / MAX, theta = startarc;
+    point p = s.getStart() - s.getCenter();
+    complex center = s.getCenter();
+    double fai = ((s.getEnd() - s.getCenter()) / p).arg();
+    complex step = unit(fai / MAX);
+    for (int i = 0; i <= MAX; ++i){
+        glVertex2dv(point(p+center).getGLVector());
+        p = p * step;
+    }
+    glEnd();
 }
 
 void drawPoint(point p){
@@ -118,6 +149,11 @@ void display(){
     //Drawing objects
     glColor3f(1.0f, 1.0f, 1.0f);
     drawCircle(point(0.0, 0.0), 1.0);
+
+    for (unsigned int i = 0; i < s.size(); ++i){
+        glColor3i(sr[i], sg[i], sb[i]);
+        drawSegment( t(s[i]) );
+    }
 
     for (unsigned int i = 0; i < l.size(); ++i){
         glColor3i(lr[i], lg[i], lb[i]);

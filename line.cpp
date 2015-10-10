@@ -64,3 +64,26 @@ void line::print(){
     }
     printf("\n");
 }
+
+segment::segment(point a, point b):line(a, b), start(a), end(b){}
+
+point segment::getStart(){ return start; }
+point segment::getEnd(){ return end; }
+
+double segment::getLength(){ return end.mobius(start).abs(); }
+
+segment segment::mobius(complex c){ return segment(start.mobius(c), end.mobius(c)); }
+segment segment::rotate(double theta){ return segment(start.rotate(theta), end.rotate(theta)); }
+
+void segment::print(){
+    printf("Segment: \n");
+    printf("\tstart: "); start.print();
+    printf("\tend: ");   end.print();
+    if (isDiameter()) printf("\tThe segment is part of a diameter.");
+    else{
+        printf("\tThe segment is not part of a diameter. The line's center is ");
+        getCenter().print();
+    }
+    printf("\n");
+    fflush(stdout);
+}
