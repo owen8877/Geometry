@@ -1,9 +1,17 @@
 This is a test project to illustrate the Hyperbolic geometry, one of the two types of Non-Euclidean geometries.
 
-The code uses the library freeglut, so run
-  apt-get install freeglut
-before compiling.
+The project uses the library freeglut.
 
-This branch is an simple snake game. Use wasd to move around.
+To compile the project(Linux), run
+    make
+the game shall be generated in the bin/ directory of the name Snake
 
-Now being written by owen and shsty.
+To cross-compile the project for Windows on a Linux machine, install MinGW by entering
+    sudo apt-get install mingw32
+then run
+    make -f Makefile.win
+the game shall be generated in the bin_win/ directory of the name Snake.exe
+
+This branch is an simple snake game. Use wasd to move around, [ESC] or [ENTER] to exit.
+
+Written by owen8877 and shsty.
