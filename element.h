@@ -56,8 +56,6 @@ class point : public complex{
         point mobius(complex c);
         point rotate(double theta);
 
-        GLdouble* getGLVector();
-
         virtual void print();
 };
 
@@ -146,5 +144,6 @@ inline complex unit(double theta){
 point getPointByDistance(point p, ideal q, double d);
 point rotateByPoint(point p, point center, double phi);
 line getLineByAngle(point p, ideal q, double phi);
+void glVertex2dp(point p);
 
 #endif

@@ -77,22 +77,13 @@ void drawSegment(segment s){
         glEnd();
         return;
     }
-    /*
-    double middle = atan2(s.getCenter().getY(), s.getCenter().getX()) + M_PI;
-    double deflection = atan(1/s.getRadius());
-    double left = middle - deflection;
-    double start = left + ((s.getStart() - s.getCenter())/(s.getLeft() - s.getCenter())).arg();
-    double end = left + ((s.getEnd() - s.getCenter())/(s.getLeft() - s.getCenter())).arg();
-    drawArc(s.getCenter(), s.getRadius(), start, end);
-    */
     glBegin(GL_LINE_STRIP);
-    //double step = (endarc-startarc) / MAX, theta = startarc;
     point p = s.getStart() - s.getCenter();
     complex center = s.getCenter();
     double fai = ((s.getEnd() - s.getCenter()) / p).arg();
     complex step = unit(fai / MAX);
     for (int i = 0; i <= MAX; ++i){
-        glVertex2dv(point(p+center).getGLVector());
+        glVertex2dp(point(p+center));
         p = p * step;
     }
     glEnd();

@@ -26,3 +26,5 @@ point rotateByPoint(point p, point center, double phi){
 line getLineByAngle(point p, ideal q, double phi){
     return line(q.mobius(p).rotate(phi), point(0.0)).mobius(-p);
 }
+
+void glVertex2dp(point p){ glVertex2d(p.getX(), p.getY()); }
