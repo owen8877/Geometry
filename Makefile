@@ -3,7 +3,7 @@
 DIR = bin
 BIN = $(DIR)/Geometry
 OBJ = $(DIR)/main.o $(DIR)/draw.o $(DIR)/complex.o $(DIR)/point.o $(DIR)/line.o $(DIR)/element.o $(DIR)/transform.o $(DIR)/model.o
-LIB = -Wl,-Bstatic -lglut -Wl,-Bdynamic -lGL -lX11 -lXxf86vm -lXrandr -lXi -g3 -Wl,-rpath,freeglut
+LIB = -Lfreeglut -Wl,-Bstatic -lglut -Wl,-Bdynamic -lGL -lX11 -lXxf86vm -lXrandr -lXi -g3
 CXX = g++
 CXXFLAGS = -I"freeglut/include" -Wall -g3
 
