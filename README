@@ -2,16 +2,21 @@ This is a test project to illustrate the Hyperbolic geometry, one of the two typ
 
 The project uses the library freeglut.
 
-To compile the project(Linux), run
+This branch is an simple snake game. Use wasd to move around, [ESC] or [ENTER] to exit.
+
+----------------------------------
+To compile the project(Linux), make sure you've installed the glu library
+    sudo apt-get install libglu1-mesa-dev
+then run
     make
 the game shall be generated in the bin/ directory of the name Snake
 
+----------------------------------
 To cross-compile the project for Windows on a Linux machine, install MinGW by entering
     sudo apt-get install mingw32
 then run
-    make -f Makefile.win
+    make -f Makefile.mingw32_cross
 the game shall be generated in the bin_win/ directory of the name Snake.exe
-
-This branch is an simple snake game. Use wasd to move around, [ESC] or [ENTER] to exit.
+----------------------------------
 
 Written by owen8877 and shsty.
