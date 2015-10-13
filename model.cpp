@@ -18,37 +18,37 @@ double rr = 0.05;
 vector<point> v;
 vector<line> l;
 vector<segment> s;
-vector<int> sr, sg, sb;
-vector<int> vr, vg, vb;
-vector<int> lr, lg, lb;
+vector<double> sr, sg, sb;
+vector<double> vr, vg, vb;
+vector<double> lr, lg, lb;
 transform t(0.0);
 
 void new_point_in_v(){
     double ran = (double) rand()/RAND_MAX*2 - 1;
-    vr.push_back(rand());
-    vg.push_back(rand());
-    vb.push_back(rand());
+    vr.push_back((double)rand()/RAND_MAX);
+    vg.push_back((double)rand()/RAND_MAX);
+    vb.push_back((double)rand()/RAND_MAX);
     v.push_back(point(ran, ((double)rand()/RAND_MAX*2-1)*sqrt(1-ran*ran)));
 }
 
 void add_point(point _p){
-    vr.push_back(rand());
-    vg.push_back(rand());
-    vb.push_back(rand());
+    vr.push_back((double)rand()/RAND_MAX);
+    vg.push_back((double)rand()/RAND_MAX);
+    vb.push_back((double)rand()/RAND_MAX);
     v.push_back(_p);
 }
 
 void add_line(line _l){
-    lr.push_back(rand());
-    lg.push_back(rand());
-    lb.push_back(rand());
+    lr.push_back((double)rand()/RAND_MAX);
+    lg.push_back((double)rand()/RAND_MAX);
+    lb.push_back((double)rand()/RAND_MAX);
     l.push_back(_l);
 }
 
 void add_segment(segment _s){
-    sr.push_back(rand());
-    sg.push_back(rand());
-    sb.push_back(rand());
+    sr.push_back((double)rand()/RAND_MAX);
+    sg.push_back((double)rand()/RAND_MAX);
+    sb.push_back((double)rand()/RAND_MAX);
     s.push_back(_s);
 }
 

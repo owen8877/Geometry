@@ -16,10 +16,10 @@ const double TINY = 0.01;
 
 extern vector<point> v;
 extern vector<line> l;
-extern vector<int> vr, vg, vb;
-extern vector<int> lr, lg, lb;
+extern vector<double> vr, vg, vb;
+extern vector<double> lr, lg, lb;
 extern vector<segment> s;
-extern vector<int> sr, sg, sb;
+extern vector<double> sr, sg, sb;
 extern transform t;
 
 int getfps(){
@@ -108,9 +108,9 @@ void drawPoint(point p, double size){
     glEnd();
 }
 
-void drawPoint(point p, int r, int g, int b){
+void drawPoint(point p, double r, double g, double b){
     glBegin(GL_POLYGON);
-    glColor3i(r, g, b);
+    glColor3d(r, g, b);
     glVertex2d(p.getX()-TINY, p.getY()-TINY);
     glVertex2d(p.getX()-TINY, p.getY()+TINY);
     glVertex2d(p.getX()+TINY, p.getY()+TINY);
@@ -142,17 +142,17 @@ void display(){
     drawCircle(point(0.0, 0.0), 1.0);
 
     for (unsigned int i = 0; i < s.size(); ++i){
-        glColor3i(sr[i], sg[i], sb[i]);
+        glColor3d(sr[i], sg[i], sb[i]);
         drawSegment( t(s[i]) );
     }
 
     for (unsigned int i = 0; i < l.size(); ++i){
-        glColor3i(lr[i], lg[i], lb[i]);
+        glColor3d(lr[i], lg[i], lb[i]);
         drawLine( t(l[i]) );
     }
 
     for (unsigned int i = 0; i < v.size(); ++i){
-        glColor3i(vr[i], vg[i], vb[i]);
+        glColor3d(vr[i], vg[i], vb[i]);
         drawPoint( t(v[i]) );
     }
 

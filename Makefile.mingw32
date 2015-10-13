@@ -1,0 +1,48 @@
+#Project Geometry test
+
+CXX = g++.exe -D__DEBUG__
+CC  = gcc.exe -D__DEBUG__
+DIR = bin_win
+BIN = $(DIR)/Geometry.exe
+OBJ = $(DIR)/main.o $(DIR)/draw.o $(DIR)/complex.o $(DIR)/point.o $(DIR)/line.o $(DIR)/element.o $(DIR)/transform.o $(DIR)/model.o
+LIB = -L'freeglut-MinGW-3.0.0-1.mp/freeglut/lib' -lfreeglut_static -lopengl32 -lwinmm -lgdi32 -Wl,--subsystem,windows -g3
+CXXFLAGS = -Wall -g3 -DFREEGLUT_STATIC -I'freeglut-MinGW-3.0.0-1.mp/freeglut/include'
+RM  = rm.exe -f
+
+.PHONY: test clean
+
+$(BIN): $(DIR) $(OBJ)
+	$(CXX) $(OBJ) -o $(BIN) $(LIB)
+
+$(DIR):
+	mkdir $(DIR)
+
+test : $(BIN)
+	./$(BIN)
+
+$(DIR)/main.o : main.cpp element.h draw.h model.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(DIR)/draw.o : draw.cpp element.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(DIR)/complex.o : complex.cpp element.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(DIR)/point.o : point.cpp element.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(DIR)/line.o : line.cpp element.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(DIR)/element.o : element.cpp element.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(DIR)/transform.o : transform.cpp element.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(DIR)/model.o : model.cpp element.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean :
+	$(RM) $(BIN) $(OBJ)

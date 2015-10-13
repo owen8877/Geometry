@@ -7,14 +7,23 @@ To compile the project(Linux), make sure you've installed the glu library
     sudo apt-get install libglu1-mesa-dev
 then run
     make
-the game shall be generated in the bin/ directory of the name Geometry
+the program shall be generated in the bin/ directory of the name Geometry
 
 ----------------------------------
 To cross-compile the project for Windows on a Linux machine, install MinGW by entering
     sudo apt-get install mingw32
 then run
     make -f Makefile.mingw32_cross
-the game shall be generated in the bin_win/ directory of the name Geometry.exe
+the program shall be generated in the bin_win/ directory of the name Geometry.exe
+
 ----------------------------------
+To compile the project in Windows, make sure you've installed MinGW(included in DEV-C++), then run
+    make -f Makefile.mingw32
+or
+    mingw32-make -f Makefile.mingw32
+the program shall be generated in the bin_win/ directory of the name Geometry.exe
+
+----------------------------------
+
 
 Written by owen8877 and shsty.
