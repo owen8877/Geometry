@@ -34,6 +34,8 @@ int getfps(){
     return fps;
 }
 
+void glVertex2dp(point p){ glVertex2d(p.getX(), p.getY()); }
+
 void drawCircle(point center, double radius){
     glBegin(GL_LINE_LOOP);
     double theta;
@@ -158,7 +160,7 @@ void display(){
 
     //Drawing text infomation
     char str[257];
-    sprintf(str, "FPS: %d\n", getfps());
+    sprintf(str, "FPS: %d\nEdges: %lu", getfps(), s.size());
     glColor3f(1.0f, 1.0f, 0.5f);
     glRasterPos2d(-1, 1 - 24.0/screenSize);
     glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)str);

@@ -1,7 +1,6 @@
 #ifndef ELEMENT_H_
 #define ELEMENT_H_
 #include <math.h>
-#include <GL/glut.h>
 
 // The class of complex numbers, use as intended.
 class complex{
@@ -144,6 +143,6 @@ inline complex unit(double theta){
 point getPointByDistance(point p, ideal q, double d);
 point rotateByPoint(point p, point center, double phi);
 line getLineByAngle(point p, ideal q, double phi);
-void glVertex2dp(point p);
+double PoincareDistance(point p, point q);
 
 #endif

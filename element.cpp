@@ -27,4 +27,7 @@ line getLineByAngle(point p, ideal q, double phi){
     return line(q.mobius(p).rotate(phi), point(0.0)).mobius(-p);
 }
 
-void glVertex2dp(point p){ glVertex2d(p.getX(), p.getY()); }
+double PoincareDistance(point p, point q){
+    double d = q.mobius(p).abs();
+    return log((1+d)/(1-d));
+}

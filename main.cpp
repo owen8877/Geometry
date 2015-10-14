@@ -25,6 +25,7 @@ void timerCallback(int index){
     switch (index) {
         case 0:
             glutTimerFunc(33, &timerCallback, 0);
+            beforeDrawing();
             update(kbstat);
             glutPostRedisplay();
             break;

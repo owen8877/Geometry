@@ -18,10 +18,12 @@ double rr = 0.05;
 vector<point> v;
 vector<line> l;
 vector<segment> s;
+vector<bool> sflag;
 vector<double> sr, sg, sb;
 vector<double> vr, vg, vb;
 vector<double> lr, lg, lb;
 transform t(0.0);
+int head;
 
 void new_point_in_v(){
     double ran = (double) rand()/RAND_MAX*2 - 1;
@@ -53,20 +55,43 @@ void add_segment(segment _s){
 }
 
 void initModel(){
-    double a = sin(M_PI/42)/sqrt(( cos(2*M_PI/3)+cos(2*M_PI/7) )/2);
+    double rad = sin(M_PI/42)/sqrt(( cos(2*M_PI/3)+cos(2*M_PI/7) )/2);
     for (int i = 0; i < 3; ++i){
-        add_point(point(a*unit(i*M_PI*2/3)));
+        add_point(point(rad*unit(i*M_PI*2/3)));
     }
-    for (int i = 2; i < 7; ++i){
-        add_point(rotateByPoint(v[i], v[0], 2*M_PI/7));
+    for (int i = 0; i < 3; ++i){
+        add_segment(segment(v[i], v[(i+1)%3]));
+        sflag.push_back(true);
     }
-    for (int i = 0; i < 7; ++i){
-        add_line(line(v[0], v[i+1]));
-        add_line(line(v[i+1], v[(i+1)%7+1]));
+    head = 0;
+}
+
+void beforeDrawing(){
+    point l, r, mid;
+    bool flag = false;
+
+    if (s.size() >= 2000) return;
+
+    while (!sflag[head]) ++head;
+    r = (s[head]).getStart();
+    l = (s[head]).getEnd();
+    mid = rotateByPoint(r, l, M_PI*2/7);
+
+    if (PoincareDistance(mid, s.back().getStart()) > 1e-6){
+        add_segment(segment(r, mid));
+        sflag.push_back(true);
+        flag = true;
+    } else sflag.back() = false;
+
+    if (PoincareDistance(mid, s[++head].getEnd()) > 1e-6){
+        add_segment(segment(mid, l));
+        sflag.push_back(true);
+        flag = true;
+    } else ++head;
+
+    if (flag) {
+        add_point(mid);
     }
-    add_point(point(0.7, 0.5));
-    add_point(point(0.6, 0.2));
-    add_segment(segment(point(0.7,0.5), point(0.6, 0.2)));
 }
 
 void update(int kbstat[]){
