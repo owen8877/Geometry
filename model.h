@@ -8,6 +8,5 @@
 void initModel();
 void update(int kbstat[]);
 void renewMouseStat(double x, double y, int button);
-void beforeDrawing();
 
 #endif

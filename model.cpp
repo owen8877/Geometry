@@ -66,11 +66,11 @@ void initModel(){
     head = 0;
 }
 
-void beforeDrawing(){
+void updateModel(){
     point l, r, mid;
-    bool flag = false;
+    bool flag = true;
 
-    if (s.size() >= 2000) return;
+    if (s.size() >= 183) return;
 
     while (!sflag[head]) ++head;
     r = (s[head]).getStart();
@@ -80,14 +80,18 @@ void beforeDrawing(){
     if (PoincareDistance(mid, s.back().getStart()) > 1e-6){
         add_segment(segment(r, mid));
         sflag.push_back(true);
-        flag = true;
-    } else sflag.back() = false;
+    } else {
+        sflag.back() = false;
+        flag = false;
+    }
 
     if (PoincareDistance(mid, s[++head].getEnd()) > 1e-6){
         add_segment(segment(mid, l));
         sflag.push_back(true);
-        flag = true;
-    } else ++head;
+    } else {
+        ++head;
+        flag = false;
+    }
 
     if (flag) {
         add_point(mid);
@@ -102,9 +106,10 @@ void update(int kbstat[]){
     if (kbstat['q']) t = transform(rr) * t;
     if (kbstat['e']) t = transform(-rr) * t;
     if (kbstat['l']) {
-        if (0 < v.size()) t = transform(v[0]);
+        if (0 < v.size()) t = transform(0.0);
         kbstat['l'] = 0;
     }
+    updateModel();
 }
 
 void renewMouseStat(double x, double y, int button){

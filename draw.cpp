@@ -11,7 +11,7 @@ extern int screenSize;
 extern int screenWidth;
 extern int screenHeight;
 
-const int MAX = 100;
+const int MAX = 200;
 const double TINY = 0.01;
 
 extern vector<point> v;
@@ -37,20 +37,21 @@ int getfps(){
 void glVertex2dp(point p){ glVertex2d(p.getX(), p.getY()); }
 
 void drawCircle(point center, double radius){
-    glBegin(GL_LINE_LOOP);
+    glBegin(GL_LINE_STRIP);
     double theta;
-    for (int i = 0;i < MAX;i++){
+    for (int i = 0;i <= MAX;i++){
         theta = 2 * M_PI * i / MAX;
-        glVertex2d(radius*cos(theta)+center.getX(), radius*sin(theta)+center.getY());
+        glVertex2dp(radius*unit(theta)+center);
     }
     glEnd();
 }
 
 void drawArc(point center, double radius, double startarc, double endarc){
+    int chord = (int)(MAX * radius * fabs(endarc - startarc) / 2) + 2;
     glBegin(GL_LINE_STRIP);
-    double step = (endarc-startarc) / MAX, theta = startarc;
-    for (int i = 0; i <= MAX; ++i){
-        glVertex2d(radius*cos(theta) + center.getX(), radius*sin(theta) + center.getY());
+    double step = (endarc-startarc) / chord, theta = startarc;
+    for (int i = 0; i <= chord; ++i){
+        glVertex2dp(radius*unit(theta) + center);
         theta += step;
     }
     glEnd();
@@ -64,7 +65,7 @@ void drawLine(line l){
         glEnd();
         return;
     }
-    double middle = atan2(l.getCenter().getY(), l.getCenter().getX()) + M_PI;
+    double middle = l.getCenter().arg() + M_PI;
     double deflection = atan(1/l.getRadius());
     double start = middle - deflection;
     double end = middle + deflection;
@@ -79,16 +80,10 @@ void drawSegment(segment s){
         glEnd();
         return;
     }
-    glBegin(GL_LINE_STRIP);
-    point p = s.getStart() - s.getCenter();
-    complex center = s.getCenter();
-    double fai = ((s.getEnd() - s.getCenter()) / p).arg();
-    complex step = unit(fai / MAX);
-    for (int i = 0; i <= MAX; ++i){
-        glVertex2dp(point(p+center));
-        p = p * step;
-    }
-    glEnd();
+    double middle = s.getCenter().arg() + M_PI;
+    complex startdef = (s.getStart() - s.getCenter())*unit(-middle);
+    complex enddef = (s.getEnd() - s.getCenter())*unit(-middle);
+    drawArc(s.getCenter(), s.getRadius(), middle + startdef.arg(), middle + enddef.arg());
 }
 
 void drawPoint(point p){
@@ -110,16 +105,6 @@ void drawPoint(point p, double size){
     glEnd();
 }
 
-void drawPoint(point p, double r, double g, double b){
-    glBegin(GL_POLYGON);
-    glColor3d(r, g, b);
-    glVertex2d(p.getX()-TINY, p.getY()-TINY);
-    glVertex2d(p.getX()-TINY, p.getY()+TINY);
-    glVertex2d(p.getX()+TINY, p.getY()+TINY);
-    glVertex2d(p.getX()+TINY, p.getY()-TINY);
-    glEnd();
-}
-
 void reshape(int width, int height){
     screenWidth = width;
     screenHeight = height;
@@ -133,6 +118,7 @@ void reshape(int width, int height){
 
 void initDisplay(){
     glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void display(){
