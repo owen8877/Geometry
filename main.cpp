@@ -15,9 +15,10 @@ int screenHeight = 600;
 // Initialization
 void init(){
     printf("--------Geometry test 0.0.0--------\n");
-    printf("OpenGL Version %s\n\n", glGetString(GL_VERSION));
+    printf("OpenGL Version %s\n", glGetString(GL_VERSION));
     initDisplay();
     initModel();
+    fflush(stdout);
 }
 
 // Timer Callback
@@ -84,7 +85,7 @@ void mouseMotion(int x, int y){
 int main(int argc, char *argv[]){
     //Window Initialization
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+    glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_MULTISAMPLE);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(screenWidth, screenHeight);
     glutCreateWindow("Geometry");

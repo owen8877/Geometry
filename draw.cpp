@@ -47,7 +47,7 @@ void drawCircle(point center, double radius){
 }
 
 void drawArc(point center, double radius, double startarc, double endarc){
-    int chord = (int)(MAX * radius * fabs(endarc - startarc) / 2) + 2;
+    int chord = (int)(MAX * radius * fabs(endarc - startarc) / 2) + 1;
     glBegin(GL_LINE_STRIP);
     double step = (endarc-startarc) / chord, theta = startarc;
     for (int i = 0; i <= chord; ++i){
@@ -87,7 +87,8 @@ void drawSegment(segment s){
 }
 
 void drawPoint(point p){
-    double size = 0.02*(1 - p.abs2()) + 0.003;
+    double size = 0.02*(1 - p.abs2());
+    if (size * screenSize / 2 < 0.3) return;
     glBegin(GL_POLYGON);
     glVertex2d(p.getX()-size, p.getY()-size);
     glVertex2d(p.getX()-size, p.getY()+size);
@@ -114,16 +115,34 @@ void reshape(int width, int height){
     glOrtho (-(GLfloat)width / screenSize, (GLfloat)width / screenSize,
             -(GLfloat)height / screenSize, (GLfloat)height / screenSize,
             -2.0f, 2.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void initDisplay(){
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    /*
+    glEnable(GL_LINE_SMOOTH);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glLineWidth(1.5);
+    */
+    glEnable(GL_MULTISAMPLE);
+
     glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void display(){
     //Clearing buffer
-    glClear(GL_COLOR_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT);
+    glBegin(GL_POLYGON);
+    glColor4f(0.0f, 0.0f, 0.0f, 0.8f);
+    glVertex2d(1.0f, 1.0f);
+    glVertex2d(-1.0f, 1.0f);
+    glVertex2d(-1.0f, -1.0f);
+    glVertex2d(1.0f, -1.0f);
+    glEnd();
 
     //Drawing objects
     glColor3f(1.0f, 1.0f, 1.0f);

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <vector>
+#include <lua.hpp>
 #include "element.h"
 #include "model.h"
 
@@ -23,6 +24,7 @@ vector<double> sr, sg, sb;
 vector<double> vr, vg, vb;
 vector<double> lr, lg, lb;
 transform t(0.0);
+const int MAX_SEGS = 6000;
 int head;
 
 void new_point_in_v(){
@@ -54,7 +56,55 @@ void add_segment(segment _s){
     s.push_back(_s);
 }
 
+void callLua(const char * luafile){
+    int error = 0;
+
+    // Initializing lua state
+    lua_State *L = luaL_newstate();
+    if (NULL == L) {
+        printf("Error allocating memory for lua state.\n");
+        return;
+    }
+
+    printf("Lua Version %.0lf\n", *lua_version(L));
+    luaL_openlibs(L);
+
+    // Loading lua script
+    if ( (error = luaL_loadfile(L, luafile)) ){
+        printf("Error loading file %s : ", luafile);
+        switch (error){
+            case LUA_ERRFILE:   printf("LUA_ERRFILE"); break;
+            case LUA_ERRSYNTAX: printf("LUA_ERRSYNTAX"); break;
+            case LUA_ERRMEM:    printf("LUA_ERRMEM"); break;
+            case LUA_ERRGCMM:   printf("LUA_ERRGCMM"); break;
+        }
+        printf("\n");
+        return;
+    }
+
+    // Running the script
+    printf("\n");
+    if ( (error = lua_pcall(L, 0, 0, 0)) ){
+        printf("Error running script %s : ", luafile);
+        switch (error){
+            case LUA_ERRRUN:  printf("LUA_ERRRUN"); break;
+            case LUA_ERRMEM:  printf("LUA_ERRMEM"); break;
+            case LUA_ERRERR:  printf("LUA_ERRERR"); break;
+            case LUA_ERRGCMM: printf("LUA_ERRGCMM"); break;
+        }
+        printf("\n");
+        printf("%s\n", lua_tostring(L, -1));
+        lua_pop(L, 1);
+        return;
+    }
+
+    // Closing lua state
+    lua_close(L);
+}
+
 void initModel(){
+    callLua("test.lua");
+
     double rad = sin(M_PI/42)/sqrt(( cos(2*M_PI/3)+cos(2*M_PI/7) )/2);
     for (int i = 0; i < 3; ++i){
         add_point(point(rad*unit(i*M_PI*2/3)));
@@ -70,7 +120,7 @@ void updateModel(){
     point l, r, mid;
     bool flag = true;
 
-    if (s.size() >= 183) return;
+    if (s.size() >= MAX_SEGS) return;
 
     while (!sflag[head]) ++head;
     r = (s[head]).getStart();
@@ -109,7 +159,7 @@ void update(int kbstat[]){
         if (0 < v.size()) t = transform(0.0);
         kbstat['l'] = 0;
     }
-    updateModel();
+    for (int i = 0; i < 100; ++i) updateModel();
 }
 
 void renewMouseStat(double x, double y, int button){

@@ -3,9 +3,9 @@
 DIR = bin
 BIN = $(DIR)/Geometry
 OBJ = $(DIR)/main.o $(DIR)/draw.o $(DIR)/complex.o $(DIR)/point.o $(DIR)/line.o $(DIR)/element.o $(DIR)/transform.o $(DIR)/model.o
-LIB = -Lfreeglut -Wl,-Bstatic -lglut -Wl,-Bdynamic -lGL -lX11 -lXxf86vm -lXrandr -lXi -g3
+LIB = -Lfreeglut -Llua-5.3.1/lib -Wl,-Bstatic -lglut -llua -Wl,-Bdynamic -ldl -lGL -lX11 -lXxf86vm -lXrandr -lXi -g3
 CXX = g++
-CXXFLAGS = -I"freeglut/include" -Wall -g3
+CXXFLAGS = -I"freeglut/include" -I"lua-5.3.1/include" -Wall -g3
 
 .PHONY: test clean cleanbackup cb win
 
