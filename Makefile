@@ -7,7 +7,7 @@ LIB = -Lfreeglut -Llua-5.3.1/lib -Wl,-Bstatic -lglut -llua -Wl,-Bdynamic -ldl -l
 CXX = g++
 CXXFLAGS = -I"freeglut/include" -I"lua-5.3.1/include" -Wall -g3
 
-.PHONY: test clean cleanbackup cb win
+.PHONY: test clean cleanbackup cb
 
 $(BIN): $(DIR) $(OBJ)
 	$(CXX) $(OBJ) -o $(BIN) $(LIB)

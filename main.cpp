@@ -1,5 +1,6 @@
+#include <cstdio>
 #include <GL/freeglut.h>
-#include <stdio.h>
+
 #include "element.h"
 #include "draw.h"
 #include "model.h"

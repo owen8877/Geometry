@@ -1,6 +1,6 @@
 #ifndef ELEMENT_H_
 #define ELEMENT_H_
-#include <math.h>
+#include <cmath>
 
 // The class of complex numbers, use as intended.
 class complex{

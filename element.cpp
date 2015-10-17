@@ -1,6 +1,9 @@
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 #include "element.h"
+
+using namespace std;
+
 /*
     This function needs three arguments:
         point p : the original point;

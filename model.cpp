@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
 #include <vector>
 #include <lua.hpp>
 #include "element.h"
@@ -24,7 +24,7 @@ vector<double> sr, sg, sb;
 vector<double> vr, vg, vb;
 vector<double> lr, lg, lb;
 transform t(0.0);
-const int MAX_SEGS = 6000;
+const size_t MAX_SEGS = 6000;
 int head;
 
 void new_point_in_v(){

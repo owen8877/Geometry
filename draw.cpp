@@ -1,8 +1,12 @@
-#include <GL/freeglut.h>
-#include <stdio.h>
-#include <math.h>
+#include <cstdio>
+#include <cmath>
 #include <vector>
-#include <time.h>
+#include <ctime>
+#include <GL/freeglut.h>
+#ifdef _WIN32
+#include <GL/glext.h>
+#endif
+
 #include "element.h"
 
 using namespace std;
@@ -165,7 +169,7 @@ void display(){
 
     //Drawing text infomation
     char str[257];
-    sprintf(str, "FPS: %d\nEdges: %lu", getfps(), s.size());
+    sprintf(str, "FPS: %d\nEdges: %lu", getfps(), (unsigned long)s.size());
     glColor3f(1.0f, 1.0f, 0.5f);
     glRasterPos2d(-1, 1 - 24.0/screenSize);
     glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)str);
