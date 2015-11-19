@@ -8,10 +8,6 @@
 
 using namespace std;
 
-extern int screenSize;
-extern int screenWidth;
-extern int screenHeight;
-
 complex dx(0.03, 0);
 complex dy(0, 0.03);
 double rr = 0.05;
@@ -162,6 +158,8 @@ void update(int kbstat[]){
     for (int i = 0; i < 100; ++i) updateModel();
 }
 
+double mousex = 0, mousey = 0;
+
 void renewMouseStat(double x, double y, int button){
     static int button_old = 0;
     static double x_old = 0, y_old = 0;
@@ -170,4 +168,5 @@ void renewMouseStat(double x, double y, int button){
     }
     button_old = button;
     x_old = x; y_old = y;
+    mousex = x; mousey = y;
 }

@@ -25,6 +25,7 @@ extern vector<double> lr, lg, lb;
 extern vector<segment> s;
 extern vector<double> sr, sg, sb;
 extern transform t;
+extern double mousex, mousey;
 
 int getfps(){
     static int count = 0, fps = 0;
@@ -169,7 +170,7 @@ void display(){
 
     //Drawing text infomation
     char str[257];
-    sprintf(str, "FPS: %d\nEdges: %lu", getfps(), (unsigned long)s.size());
+    sprintf(str, "FPS: %d\nEdges: %lu\nMouse: %+.3lf, %+.3lf", getfps(), (unsigned long)s.size(), mousex, mousey);
     glColor3f(1.0f, 1.0f, 0.5f);
     glRasterPos2d(-1, 1 - 24.0/screenSize);
     glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)str);

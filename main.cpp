@@ -28,7 +28,7 @@ void timerCallback(int index){
         case 0:
             glutTimerFunc(33, &timerCallback, 0);
             update(kbstat);
-            glutPostRedisplay();
+            if (glutGetWindow()) glutPostRedisplay();
             break;
     }
 }
@@ -72,15 +72,20 @@ void mouseKey(int button, int state, int x, int y){
             mouseButton &= ~RIGHT_MOUSE_BUTTON;
             break;
     }
-    renewMouseStat((double) (x - screenWidth/2.0)/screenSize,
-                (double) (screenHeight/2.0 - y)/screenSize,
+    renewMouseStat((double) 2.0*(x - screenWidth/2.0)/screenSize,
+                (double) 2.0*(screenHeight/2.0 - y)/screenSize,
                 mouseButton);
 }
 
 void mouseMotion(int x, int y){
-    renewMouseStat((double) (x - screenWidth/2.0)/screenSize,
-                (double) (screenHeight/2.0 - y)/screenSize,
+    renewMouseStat((double) 2.0*(x - screenWidth/2.0)/screenSize,
+                (double) 2.0*(screenHeight/2.0 - y)/screenSize,
                 mouseButton);
+}
+
+// Close Callback
+void closeCallback(){
+    printf("Closing window.\n");
 }
 
 int main(int argc, char *argv[]){
@@ -104,6 +109,7 @@ int main(int argc, char *argv[]){
     glutPassiveMotionFunc(&mouseMotion);
 
     glutTimerFunc(0, &timerCallback, 0);
+    glutCloseFunc(&closeCallback);
 
     //Initialization
     init();
