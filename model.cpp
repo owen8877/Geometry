@@ -25,7 +25,7 @@ transform t(0.0);
 deque<point> snake;
 point food;
 double snakeStep = 0.2;
-double boundRadius = 3;
+double boundRadius = 2;
 ideal northDir(1.0, 0.0);
 int snakeDir = 0;
 int snakeInc;
