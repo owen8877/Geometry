@@ -130,6 +130,7 @@ point getPointByDistance(point p, ideal q, double d);
 point rotateByPoint(point p, point center, double phi);
 line getLineByAngle(point p, ideal q, double phi);
 double PoincareDistance(point p1, point p2);
+double PoincareDistance(point p);
 point randPoint();
 
 #endif

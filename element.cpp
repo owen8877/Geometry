@@ -28,6 +28,11 @@ line getLineByAngle(point p, ideal q, double phi){
     return line(q.mobius(p).rotate(phi), point(0.0)).mobius(-p);
 }
 
+double PoincareDistance(point p){
+    double d = p.abs();
+    return log((1+d)/(1-d));
+}
+
 double PoincareDistance(point p1, point p2){
     double d = (p2.mobius(p1)).abs();
     return log((1+d)/(1-d));

@@ -21,6 +21,7 @@ extern vector<int> vr, vg, vb;
 extern vector<int> lr, lg, lb;
 extern transform t;
 extern deque<point> snake;
+extern size_t snakeend;
 extern double snakeStep;
 extern double boundRadius;
 extern point food;
@@ -147,6 +148,14 @@ void reshape(int width, int height){
 }
 
 void initDisplay(){
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    /*
+     *     glEnable(GL_LINE_SMOOTH);
+     *     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+     *     glLineWidth(1.5);
+     **/
+    glEnable(GL_MULTISAMPLE);
     glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
 }
 
@@ -173,18 +182,25 @@ void display(){
         drawPoincareCircle(t(point(0.0)), boundRadius*i/circles);
     }
 
-    deque<point>::iterator it = snake.begin();
+    deque<point>::reverse_iterator it = snake.rbegin();
+
+    glColor4f(1.0f, 1.0f, 1.0f, 0.15f);
+    for (size_t i = 0; (i < snakeend) && (it != snake.rend()-1); ++i)
+        drawPoincareCircle(t(*(it++)), snakeWidth, true);
+
+    glColor3f(0.0f, 0.7f, 0.0f);
+    for (; it != snake.rend()-1; ++it)
+        drawPoincareCircle(t(*it), snakeWidth, true);
+
     glColor3f(0.3f, 1.0f, 0.3f);
     drawPoincareCircle(t(*it), snakeWidth * 1.5, true);
-    glColor3f(0.0f, 0.7f, 0.0f);
-    for (++it; it != snake.end(); ++it) drawPoincareCircle(t(*it), snakeWidth, true);
 
     glColor3f(1.0f, 0.5f, 1.0f);
     drawPoint(t(food));
 
     //Drawing text infomation
     char str[257];
-    sprintf(str, "Score: %d\n", score);
+    sprintf(str, "Score: %d\nFood: %lf\n", score, PoincareDistance(food));
     glColor3f(1.0f, 1.0f, 0.5f);
     glRasterPos2d(-1, 1 - 24.0/screenSize);
     glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)str);
