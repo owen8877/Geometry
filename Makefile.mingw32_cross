@@ -1,19 +1,27 @@
 #Project Geometry test
 
+CXX = i586-mingw32msvc-g++
+CC  = i586-mingw32msvc-gcc
 DIR = bin_win
 BIN = $(DIR)/Geometry.exe
 OBJ = $(DIR)/main.o $(DIR)/draw.o $(DIR)/complex.o $(DIR)/point.o $(DIR)/line.o $(DIR)/element.o $(DIR)/transform.o $(DIR)/model.o
-LIB = -L'freeglut-MinGW-3.0.0-1.mp/freeglut/lib' -lfreeglut_static -lopengl32 -lwinmm -lgdi32 -Wl,--subsystem,windows -g3
-CXX = i586-mingw32msvc-g++
-CXXFLAGS = -Wall -g3 -DFREEGLUT_STATIC -I'freeglut-MinGW-3.0.0-1.mp/freeglut/include'
+LIB = -L"lua-5.3.1/lib" -L"freeglut-MinGW-3.0.0-1.mp/freeglut/lib" -llua53 -lfreeglut_static -lopengl32 -lwinmm -lgdi32 -Wl,--subsystem,windows -g3
+DLL = $(DIR)/lua53.dll
+CXXFLAGS = -Wall -g3 -DFREEGLUT_STATIC -I"lua-5.3.1/include" -I"freeglut-MinGW-3.0.0-1.mp/freeglut/include"
+RM  = rm -vf
+CP  = cp -vf
+MKDIR = mkdir
 
 .PHONY: test clean cleanbackup cb
 
-$(BIN): $(DIR) $(OBJ)
+$(BIN): $(DIR) $(OBJ) $(DLL)
 	$(CXX) $(OBJ) -o $(BIN) $(LIB)
 
 $(DIR):
-	mkdir $(DIR)
+	$(MKDIR) $(DIR)
+
+$(DLL): 
+	$(CP) lua-5.3.1/lib/lua53.dll $@
 
 test : $(BIN)
 	./$(BIN)
@@ -43,9 +51,9 @@ $(DIR)/model.o : model.cpp element.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 cleanbackup :
-	rm -vf *~ *.orig .*~
+	$(RM) *~ *.orig .*~
 
 cb : cleanbackup
 
 clean :
-	rm -vf $(BIN) $(OBJ)
+	$(RM) $(BIN) $(OBJ)

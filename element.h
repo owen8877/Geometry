@@ -1,6 +1,6 @@
 #ifndef ELEMENT_H_
 #define ELEMENT_H_
-#include <math.h>
+#include <cmath>
 
 // The class of complex numbers, use as intended.
 class complex{
@@ -102,7 +102,7 @@ class segment : public line{
     private:
         point start, end;
     public:
-	segment(point a, point b);
+        segment(point a, point b);
 
         point getStart();
         point getEnd();
@@ -112,7 +112,7 @@ class segment : public line{
         segment mobius(complex c);
         segment rotate(double theta);
 
-	virtual void print();
+        virtual void print();
 };
 
 // The class of isometries (transforms that preserves distance) on the Poincare disk

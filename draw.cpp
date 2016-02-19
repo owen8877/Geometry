@@ -1,8 +1,12 @@
-#include <GL/freeglut.h>
-#include <stdio.h>
-#include <math.h>
+#include <cstdio>
+#include <cmath>
 #include <vector>
-#include <time.h>
+#include <ctime>
+#include <GL/freeglut.h>
+#ifdef _WIN32
+#include <GL/glext.h>
+#endif
+
 #include "element.h"
 
 using namespace std;
@@ -11,7 +15,7 @@ extern int screenSize;
 extern int screenWidth;
 extern int screenHeight;
 
-const int MAX = 100;
+const int MAX = 200;
 const double TINY = 0.01;
 
 extern vector<point> v;
@@ -21,6 +25,7 @@ extern vector<double> lr, lg, lb;
 extern vector<segment> s;
 extern vector<double> sr, sg, sb;
 extern transform t;
+extern double mousex, mousey;
 
 int getfps(){
     static int count = 0, fps = 0;
@@ -37,20 +42,21 @@ int getfps(){
 void glVertex2dp(point p){ glVertex2d(p.getX(), p.getY()); }
 
 void drawCircle(point center, double radius){
-    glBegin(GL_LINE_LOOP);
+    glBegin(GL_LINE_STRIP);
     double theta;
-    for (int i = 0;i < MAX;i++){
+    for (int i = 0;i <= MAX;i++){
         theta = 2 * M_PI * i / MAX;
-        glVertex2d(radius*cos(theta)+center.getX(), radius*sin(theta)+center.getY());
+        glVertex2dp(radius*unit(theta)+center);
     }
     glEnd();
 }
 
 void drawArc(point center, double radius, double startarc, double endarc){
+    int chord = (int)(MAX * radius * fabs(endarc - startarc) / 2) + 1;
     glBegin(GL_LINE_STRIP);
-    double step = (endarc-startarc) / MAX, theta = startarc;
-    for (int i = 0; i <= MAX; ++i){
-        glVertex2d(radius*cos(theta) + center.getX(), radius*sin(theta) + center.getY());
+    double step = (endarc-startarc) / chord, theta = startarc;
+    for (int i = 0; i <= chord; ++i){
+        glVertex2dp(radius*unit(theta) + center);
         theta += step;
     }
     glEnd();
@@ -64,7 +70,7 @@ void drawLine(line l){
         glEnd();
         return;
     }
-    double middle = atan2(l.getCenter().getY(), l.getCenter().getX()) + M_PI;
+    double middle = l.getCenter().arg() + M_PI;
     double deflection = atan(1/l.getRadius());
     double start = middle - deflection;
     double end = middle + deflection;
@@ -79,20 +85,15 @@ void drawSegment(segment s){
         glEnd();
         return;
     }
-    glBegin(GL_LINE_STRIP);
-    point p = s.getStart() - s.getCenter();
-    complex center = s.getCenter();
-    double fai = ((s.getEnd() - s.getCenter()) / p).arg();
-    complex step = unit(fai / MAX);
-    for (int i = 0; i <= MAX; ++i){
-        glVertex2dp(point(p+center));
-        p = p * step;
-    }
-    glEnd();
+    double middle = s.getCenter().arg() + M_PI;
+    complex startdef = (s.getStart() - s.getCenter())*unit(-middle);
+    complex enddef = (s.getEnd() - s.getCenter())*unit(-middle);
+    drawArc(s.getCenter(), s.getRadius(), middle + startdef.arg(), middle + enddef.arg());
 }
 
 void drawPoint(point p){
-    double size = 0.02*(1 - p.abs2()) + 0.003;
+    double size = 0.02*(1 - p.abs2());
+    if (size * screenSize / 2 < 0.3) return;
     glBegin(GL_POLYGON);
     glVertex2d(p.getX()-size, p.getY()-size);
     glVertex2d(p.getX()-size, p.getY()+size);
@@ -110,16 +111,6 @@ void drawPoint(point p, double size){
     glEnd();
 }
 
-void drawPoint(point p, double r, double g, double b){
-    glBegin(GL_POLYGON);
-    glColor3d(r, g, b);
-    glVertex2d(p.getX()-TINY, p.getY()-TINY);
-    glVertex2d(p.getX()-TINY, p.getY()+TINY);
-    glVertex2d(p.getX()+TINY, p.getY()+TINY);
-    glVertex2d(p.getX()+TINY, p.getY()-TINY);
-    glEnd();
-}
-
 void reshape(int width, int height){
     screenWidth = width;
     screenHeight = height;
@@ -129,15 +120,34 @@ void reshape(int width, int height){
     glOrtho (-(GLfloat)width / screenSize, (GLfloat)width / screenSize,
             -(GLfloat)height / screenSize, (GLfloat)height / screenSize,
             -2.0f, 2.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void initDisplay(){
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    /*
+    glEnable(GL_LINE_SMOOTH);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glLineWidth(1.5);
+    */
+    glEnable(GL_MULTISAMPLE);
+
     glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void display(){
     //Clearing buffer
-    glClear(GL_COLOR_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT);
+    glBegin(GL_POLYGON);
+    glColor4f(0.0f, 0.0f, 0.0f, 0.8f);
+    glVertex2d(1.0f, 1.0f);
+    glVertex2d(-1.0f, 1.0f);
+    glVertex2d(-1.0f, -1.0f);
+    glVertex2d(1.0f, -1.0f);
+    glEnd();
 
     //Drawing objects
     glColor3f(1.0f, 1.0f, 1.0f);
@@ -160,7 +170,7 @@ void display(){
 
     //Drawing text infomation
     char str[257];
-    sprintf(str, "FPS: %d\nEdges: %lu", getfps(), s.size());
+    sprintf(str, "FPS: %d\nEdges: %lu\nMouse: %+.3lf, %+.3lf", getfps(), (unsigned long)s.size(), mousex, mousey);
     glColor3f(1.0f, 1.0f, 0.5f);
     glRasterPos2d(-1, 1 - 24.0/screenSize);
     glutBitmapString(GLUT_BITMAP_HELVETICA_12, (unsigned char *)str);

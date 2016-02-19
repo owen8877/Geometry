@@ -1,6 +1,8 @@
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 #include "element.h"
+
+using namespace std;
 
 //Construct the line with a given center
 line::line(complex center){

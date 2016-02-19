@@ -7,7 +7,6 @@ void drawLine(line l);
 void drawSegment(segment s);
 void drawPoint(point p);
 void drawPoint(point p, double size);
-void drawPoint(point p, int r, int g, int b);
 void reshape(int width, int height);
 void initDisplay();
 void display();

@@ -1,6 +1,8 @@
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 #include "element.h"
+
+using namespace std;
 
 point transform::operator ()(point p){
     return point( unit(th) * (p - c) / (1 - p*c.conj()) );

@@ -1,6 +1,8 @@
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 #include "element.h"
+
+using namespace std;
 
 complex::complex():x(0.0), y(0.0){}
 complex::complex(double _x, double _y):x(_x), y(_y){}
